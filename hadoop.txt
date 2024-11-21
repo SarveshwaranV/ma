@@ -1,0 +1,119 @@
+sudo apt install ssh
+
+wget https://dlcdn.apache.org/hadoop/common/hadoop-3.3.6/hadoop-3.3.6.tar.gz
+
+ls
+
+tar -xvf hadoop-3.3.6.tar.gz
+
+mv hadoop-3.3.6 hadoop
+
+sudo apt install openjdk-8-jdk
+
+cd hadoop
+
+readlink -f $(which java)
+
+copy it-----1
+
+cd etc
+
+cd hadoop
+
+ls
+
+nano hadoop-env.sh
+
+java_home path = paste 1
+
+cd ../
+
+cd ../
+
+bin/hadoop
+
+cd etc
+
+ls
+
+cd hadoop
+
+ls
+
+nano core-site.xml
+
+<configuration>
+<property>
+<name>fs.defaultFS</name>
+<value>hdfs://localhost:9000</value>
+</property>
+</configuration>
+
+nano hdfs-site.xml
+
+<configuration>
+<property>
+<name>dfs.replication</name>
+<value>1</value>
+</property>
+</configuration>
+
+cd ../
+
+cd ../
+
+ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
+
+cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+
+chmod 0600 ~/.ssh/authorized_keys
+
+cd hadoop
+
+bin/hdfs namenode -format
+
+cd sbin
+
+ls
+
+./start-dfs.sh
+
+firefox -> localhost:9870
+
+jps
+
+cd ../
+
+cd share
+
+ls
+
+cd Hadoop
+
+ls
+
+cd mapreduce
+
+copy mr example --------3
+
+pwd
+
+copy the path-----2
+
+cd ../
+
+cd ../
+
+cd ../
+
+bin/hdfs dfs -mkdir -p usr/username
+
+bin/hdfs dfs -mkdir input
+
+echo "fsdfhiuer" > input.txt
+
+bin/hdfs dfs -put input.txt input
+
+bin/hadoop jar /paste 2/paste 3 wordcount input output
+
+bin/hdfs dfs -cat output/*

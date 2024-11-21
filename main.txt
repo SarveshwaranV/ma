@@ -1,0 +1,333 @@
+postman:
+
+const express = require('express');
+const bodyParser = require('body-parser');
+
+const app = express();
+const PORT = 3000;
+
+// Middleware to parse request body
+app.use(bodyParser.json());
+
+// Sample data for CRUD operations
+let users = [
+  { id: 1, name: 'John Doe', email: 'john@example.com' },
+  { id: 2, name: 'Jane Smith', email: 'jane@example.com' }
+];
+
+// CREATE: Add a new user
+app.post('/users', (req, res) => {
+  const newUser = {
+    id: users.length + 1,
+    name: req.body.name,
+    email: req.body.email
+  };
+  users.push(newUser);
+  res.status(201).json(newUser);
+});
+
+// READ: Get all users
+app.get('/users', (req, res) => {
+  res.json(users);
+});
+
+// READ: Get a user by ID
+app.get('/users/:id', (req, res) => {
+  const user = users.find(u => u.id === parseInt(req.params.id));
+  if (!user) return res.status(404).json({ message: 'User not found' });
+  res.json(user);
+});
+
+// UPDATE: Update a user's information
+app.put('/users/:id', (req, res) => {
+  const user = users.find(u => u.id === parseInt(req.params.id));
+  if (!user) return res.status(404).json({ message: 'User not found' });
+
+  user.name = req.body.name || user.name;
+  user.email = req.body.email || user.email;
+  res.json(user);
+});
+
+// DELETE: Remove a user
+app.delete('/users/:id', (req, res) => {
+  users = users.filter(u => u.id !== parseInt(req.params.id));
+  res.json({ message: 'User deleted successfully' });
+});
+
+// Start server
+app.listen(PORT, () => {
+  console.log(Server running on port ${PORT});
+});
+
+
+
+
+dropbox:
+
+import logo from './logo.svg';
+import './App.css';
+import DropboxChooser from 'react-dropbox-chooser';
+import {useState} from 'react'
+
+function App() {
+  const [url,seturl]=useState("")
+  return (
+    <div className="App">
+     <h1>upload file</h1>
+     <DropboxChooser 
+        appKey='ncye2b2etfl1mzz' 
+        success={file=>seturl(file[0].thumbnailLink)}
+        cancel={file=>console.log(file)}
+        multiselect={true}
+      ></DropboxChooser>
+      <img src={url} alt='no image' width={200}></img>
+    </div>
+  );
+}
+
+export default App;
+
+
+
+
+
+
+
+
+third party api:
+
+
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+
+function App() {
+  const [todo, setTodo] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    axios
+      .get("https://jsonplaceholder.typicode.com/todos/1")
+      .then((response) => {
+        setTodo(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <div>
+      <h1>Todo Details</h1>
+      {todo && (
+        <div>
+          <p>ID: {todo.id}</p>
+          <p>Title: {todo.title}</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default App;
+
+
+
+
+
+
+
+
+
+firebase:
+
+import logo from './logo.svg';
+import './App.css';
+import {useEffect,useState} from 'react'
+import { initializeApp } from "firebase/app";
+import { getAnalytics,logEvent } from "firebase/analytics";
+import {getAuth,signInWithEmailAndPassword} from 'firebase/auth'
+function App() {
+  const firebaseConfig = {
+    apiKey: "AIzaSyDZj1iZ14x9NiSyyrxUR1GYeNDqmruTIJE",
+    authDomain: "vvvvm-deffc.firebaseapp.com",
+    projectId: "vvvvm-deffc",
+    storageBucket: "vvvvm-deffc.firebasestorage.app",
+    messagingSenderId: "441975377097",
+    appId: "1:441975377097:web:cf76d08bdf574ed4ead118",
+    measurementId: "G-0QCJSSSF2Q"
+  };
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const auth=getAuth(app)
+useEffect(()=>{
+  logEvent(analytics,'thiru')
+},[])
+const handleLogin = async (e) => {
+  // e.preventDefault();
+  try {
+    await signInWithEmailAndPassword(auth,email,password)
+    alert("login successfull")
+  }
+  catch(e){
+    alert(e)
+  }
+}
+  return (
+    <div className="App">
+     
+      <input type="email" value={email} onChange={(e)=>setEmail(e.target.value)}></input>
+      <input type="password" value={password} onChange={(e)=>setPassword(e.target.value)}></input>
+      <button onClick={handleLogin}>Login</button>
+     
+    </div>
+  );
+}
+
+export default App;
+
+
+
+
+
+
+
+
+
+db
+
+
+import './App.css';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+
+function App() {
+  const [data, setData] = useState([]);
+  const [name, setName] = useState('');
+  const [price, setPrice] = useState('');
+  const [id, setId] = useState(null);
+
+  // Fetch products on component mount
+  useEffect(() => {
+    axios.get('http://localhost:5000/products').then(res => {
+      setData(res.data);
+    }).catch(err => console.error(err));
+  }, []);
+
+  // Function to re-fetch data
+  const get = () => {
+    axios.get('http://localhost:5000/products').then(res => {
+      setData(res.data);
+    }).catch(err => console.error(err));
+  };
+
+  // Delete a product by id
+  const del = (id) => {
+    axios.delete(`http://localhost:5000/products/${id}`).then(() => {
+      get(); // Refresh product list after deletion
+    }).catch(err => console.error(err));
+  };
+
+  // Add a new product
+  const post = (e) => {
+    e.preventDefault(); 
+    axios.post('http://localhost:5000/products', { name, price }).then(() => {
+      setName(''); // Clear name field
+      setPrice(''); // Clear price field
+      get(); // Refresh product list after adding
+    }).catch(err => console.error(err));
+  };
+const edit=(ename,eprice,eid)=>{
+  setName(ename)
+  setPrice(eprice)
+  setId(eid)
+}
+const put = () => {
+  axios.put(`http://localhost:5000/products/${id}`, { name, price }).then(() => {
+    get(); 
+    setName(''); // Clear name field
+    setPrice('');
+    setId(null);
+    
+  }).catch(err => console.error(err));
+};
+  return (
+    <div className="App">
+      <form>
+        <input
+          type='text'
+          value={name}
+          placeholder="Product Name"
+          onChange={(e) => setName(e.target.value)} // Fix "target" reference
+        />
+        <input
+          type='number'
+          value={price}
+          placeholder="Product Price"
+          onChange={(e) => setPrice(e.target.value)} // Fix "target" reference
+        />
+        {id?(
+        <button onClick={put}>update</button>):(<button onClick={post}>Add Product</button>)}
+      </form>
+
+      <ol>
+        {data.map(item => (
+          <li key={item._id}>
+            {item.name}: {item.price}
+            <button onClick={()=> edit(item.name,item.price,item._id)}>edit</button>
+            <button onClick={() => del(item._id)}>delete</button>
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+
+export default App;
+
+
+
+
+server.js
+
+const express=require('express')
+const mongoose=require('mongoose')
+const cors=require('cors')
+const app=express()
+app.use(cors())
+app.use(express.json())
+const uri='mongodb+srv://sarveshwaranv:123@cluster0.9e43j.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
+mongoose.connect(uri).then(()=>{
+    console.log("connected to  mongo")
+})
+const Student=mongoose.model('students',new mongoose.Schema(
+    {
+        name:String,
+        age:Number
+    }
+))
+app.post('/student',(req,res)=>{
+    const s=new Student(req.body)
+    s.save()
+    res.json("hi")
+})
+app.get('/student',async(req,res)=>{
+   
+    res.json(await Student.find())
+})
+app.put("/student/:id",(req,res)=>{
+    Student.findByIdAndUpdate(req.params.id,req.body,{new:true}).then((u)=>res.json(u))
+})
+app.delete("/student/:id",(req,res)=>{
+    Student.findByIdAndDelete(req.params.id).then((u)=>res.json(u))
+})
+app.listen(5000,()=>{
+    console.log("connected and started")
+})
