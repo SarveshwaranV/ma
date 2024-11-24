@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<products>
+  <product>
+    <id>1</id>
+    <name>Product 1</name>
+    <category>Category 1</category>
+    <price>10.99</price>
+  </product>
+  <product>
+    <id>2</id>
+    <name>Product 2</name>
+    <category>Category 2</category>
+    <price>9.99</price>
+  </product>
+  <product>
+    <id>3</id>
+    <name>Product 3</name>
+    <category>Category 1</category>
+    <price>12.99</price>
+  </product>
+</products>

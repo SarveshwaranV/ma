@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="mental_health_resources.xsl"?>
+<mental_health_resources>
+    <therapists>
+        <therapist>
+            <name>Dr. John </name>
+            <specialization>Clinical Psychology</specialization>
+            <contact>123-456-7890</contact>
+            <email>john@example.com</email>
+            <location>New York</location>
+        </therapist>
+        <therapist>
+            <name>Dr. Jane</name>
+            <specialization>Psychiatry</specialization>
+            <contact>098-765-4321</contact>
+            <email>jane.doe@example.com</email>
+            <location>Los Angeles</location>
+        </therapist>
+    </therapists>
+    <helplines>
+        <helpline>
+            <name>National Suicide Prevention Lifeline</name>
+            <number>1-800-273-8255</number>
+            <hours>24/7</hours>
+            <website>www.suicidepreventionlifeline.org</website>
+        </helpline>
+        <helpline>
+            <name>Crisis Text Line</name>
+            <number>Text "HELLO" to 741741</number>
+            <hours>24/7</hours>
+            <website>www.crisistextline.org</website>
+        </helpline>
+    </helplines>
+    <support_groups>
+        <group>
+            <name>Depression Support Group</name>
+            <meeting_time>Every Wednesday at 6 PM</meeting_time>
+            <location>Community Center, Room 101</location>
+        </group>
+        <group>
+            <name>Anxiety Support Group</name>
+            <meeting_time>Every Thursday at 7 PM</meeting_time>
+            <location>Library Room</location>
+        </group>
+    </support_groups>
+</mental_health_resources>

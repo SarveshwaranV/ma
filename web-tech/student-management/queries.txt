@@ -1,0 +1,21 @@
+CREATE DATABASE student_db;
+
+USE student_db;
+
+CREATE TABLE students (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    birthDate DATE
+);
+
+ALTER TABLE students 
+ADD COLUMN class VARCHAR(50),
+ADD COLUMN subject1_marks INT,
+ADD COLUMN subject2_marks INT,
+ADD COLUMN subject3_marks INT,
+ADD COLUMN grade VARCHAR(2);
+
+select * from students
+
+npm init -y
+npm install express body-parser mysql cors moment nodemon 

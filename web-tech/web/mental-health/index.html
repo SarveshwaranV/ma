@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html ng-app="mentalHealthApp">
+
+<head>
+    <meta charset="utf-8">
+    <title>Mental Health App</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-animate.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body ng-controller="MainController">
+    <div class="navbar">
+        <a href="#" ng-click="showPage('home')">Home</a>
+        <a href="#" ng-click="showPage('resources')">Resources</a>
+        <a href="#" ng-click="showPage('mentalHealthForm')">Mental Health Form</a>
+        <div style="float:right;" ng-show="!userLoggedIn">
+            <a href="#" ng-click="showPage('login')">Login</a>
+        </div>
+        <div style="float:right;" ng-show="userLoggedIn">
+            <a href="#" ng-click="logout()">Logout</a>
+        </div>
+    </div>
+
+    <div class="container main-content">
+        <div ng-show="currentPage === 'home'" class="fade-animation">
+            <h1>Welcome to the Mental Health App</h1>
+            <p>Current Date and Time: {{ currentDateTime | date:'fullDate' }} {{ currentDateTime | date:'shortTime' }}</p>
+        </div>
+
+        <div ng-show="currentPage === 'resources'" class="fade-animation">
+            <h2>Mental Health Resources</h2>
+            <ul>
+                <li ng-repeat="resource in mentalHealthResources">
+                    {{ resource.name }}
+                </li>
+            </ul>
+        </div>
+
+        <div ng-show="currentPage === 'mentalHealthForm'" class="fade-animation mental-health-form">
+            <h2>Mental Health Check-In</h2>
+            <form ng-submit="submitMentalHealthForm()">
+                <label for="mood">Mood:</label>
+                <select id="mood" ng-model="mentalHealthForm.mood" required>
+                    <option value="happy">Happy</option>
+                    <option value="neutral">Neutral</option>
+                    <option value="sad">Sad</option>
+                </select>
+                <br>
+                <label for="stress">Stress Level:</label>
+                <input type="number" id="stress" ng-model="mentalHealthForm.stressLevel" min="0" max="10" required>
+                <br>
+                <button type="submit">Submit</button>
+            </form>
+            <div ng-if="formSubmitted">
+                <h3>Form Submitted Successfully!</h3>
+                <p><strong>Mood:</strong> {{ mentalHealthForm.mood }}</p>
+                <p><strong>Stress Level:</strong> {{ mentalHealthForm.stressLevel }}</p>
+            </div>
+        </div>
+
+        <div ng-show="currentPage === 'login'" class="fade-animation login-form">
+            <h2>Login</h2>
+            <form ng-submit="login()">
+                <label>Username:</label>
+                <input type="text" ng-model="loginUsername" aria-label="Username" required>
+                <br>
+                <label>Password:</label>
+                <input type="password" ng-model="loginPassword" aria-label="Password" required>
+                <br>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

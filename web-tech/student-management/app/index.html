@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="studentApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Management</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.3/angular.min.js"></script>
+    <script src="app.js"></script>
+    <script src="controllers/studentController.js"></script>
+    <script src="services/studentService.js"></script>
+    <script src="factories/studentFactory.js"></script>
+    <script src="filters/capitalizeFilter.js"></script>
+    <script src="filters/ageFilter.js"></script>
+</head>
+<body>
+    <div ng-controller="StudentController">
+        <h1>Student Management System</h1>
+
+        <!-- Add Student Form -->
+        <div ng-include="'views/addStudent.html'"></div>
+
+        <!-- View Students -->
+        <div ng-include="'views/viewStudents.html'"></div>
+    </div>
+</body>
+</html>

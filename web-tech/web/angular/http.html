@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+  <title>HTTP Requests</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-controller="HttpRequestController">
+  <button ng-click="makeRequest()">Make Request</button>
+  <div ng-bind="response"></div>
+  <script>
+    angular.module('myApp', [])
+      .controller('HttpRequestController', ['$scope', '$http', function($scope, $http) {
+        $scope.response = '';
+
+        $scope.makeRequest = function() {
+          $http.get('https://jsonplaceholder.typicode.com/todos/1')
+            .then(function(response) {
+              $scope.response = response.data;
+            })
+            .catch(function(error) {
+              console.error(error);
+            });
+        };
+      }]);
+  </script>
+</body>
+</html>

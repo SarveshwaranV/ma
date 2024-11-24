@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+  <title>Yare Project Management App</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body ng-controller="ProjectController">
+  <h1>Yare Project Management</h1>
+
+  <!-- Search Projects -->
+  <input type="text" ng-model="searchProject" placeholder="Search for projects..." class="search-box">
+  
+  <!-- List of Projects -->
+  <ul class="project-list">
+    <li ng-repeat="project in projects | filter:searchProject">
+      <h2>{{ project.name }}</h2>
+      <p>{{ project.description }}</p>
+      <button ng-click="deleteProject(project)" class="delete-btn">Delete</button>
+      <button ng-click="editProject(project)" class="edit-btn">Edit</button>
+    </li>
+  </ul>
+
+  <!-- Add Project -->
+  <div class="add-project">
+    <h3>Add New Project</h3>
+    <form ng-submit="addProject()">
+      <input type="text" ng-model="newProject.name" placeholder="Project Name" required class="input-field">
+      <textarea ng-model="newProject.description" placeholder="Project Description" required class="input-field"></textarea>
+      <button type="submit" class="add-btn">Add Project</button>
+    </form>
+  </div>
+
+  <!-- Edit Project -->
+  <div class="edit-project" ng-show="editedProject">
+    <h3>Edit Project</h3>
+    <form ng-submit="updateProject()">
+      <input type="text" ng-model="editedProject.name" placeholder="Project Name" required class="input-field">
+      <textarea ng-model="editedProject.description" placeholder="Project Description" required class="input-field"></textarea>
+      <button type="submit" class="update-btn">Update Project</button>
+      <button type="button" ng-click="editedProject = null" class="cancel-btn">Cancel</button>
+    </form>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

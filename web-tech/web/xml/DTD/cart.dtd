@@ -1,0 +1,8 @@
+<!DOCTYPE cart [
+    <!ELEMENT cart (item+)>
+    <!ELEMENT item (name, quantity, price, dateAdded)>
+    <!ELEMENT name (#PCDATA)>
+    <!ELEMENT quantity (#PCDATA)>
+    <!ELEMENT price (#PCDATA)>
+    <!ELEMENT dateAdded (#PCDATA)>
+]>

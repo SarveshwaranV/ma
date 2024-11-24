@@ -1,0 +1,26 @@
+<h2>Students</h2>
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Class</th>
+        <th>Subject 1</th>
+        <th>Subject 2</th>
+        <th>Subject 3</th>
+        <th>Grade</th>
+        <th>Actions</th>
+    </tr>
+    <tr ng-repeat="student in students">
+        <td>{{ student.name | capitalize }}</td>
+        <td>{{ student.birthDate | age }}</td>
+        <td>{{ student.class }}</td>
+        <td>{{ student.subject1_marks }}</td>
+        <td>{{ student.subject2_marks }}</td>
+        <td>{{ student.subject3_marks }}</td>
+        <td>{{ student.grade }}</td>
+        <td>
+            <button ng-click="deleteStudent(student.id)">Delete</button>
+        </td>
+    </tr>
+</table>
+

@@ -1,0 +1,80 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+    <title>Mental Health Resources</title> 
+</head> 
+<body> 
+ 
+<h2>Mental Health Resources</h2> 
+<div id="therapists"></div> 
+<div id="helplines"></div> 
+<div id="support_groups"></div> 
+ 
+<script>
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+    // Ensure the request is complete (readyState == 4) and successful (status == 200)
+    if (this.readyState == 4 && this.status == 200) {
+        console.log(this.responseText); // Log the XML response for debugging
+        displayData(this);
+    } else if (this.readyState == 4 && this.status != 200) {
+        console.error("Failed to load XML file");
+    }
+};
+
+xhttp.open("GET", "mental_health_resources.xml", true); // Make sure the file path is correct
+xhttp.send();
+
+function displayData(xml) {
+    var parser = new DOMParser();
+    var xmlDoc = parser.parseFromString(xml.responseText, "text/xml");
+
+    // Display Therapists
+    var therapists = xmlDoc.getElementsByTagName("therapist");
+    var therapistsHtml = "<h3>Therapists</h3>";
+    for (var i = 0; i < therapists.length; i++) {
+        therapistsHtml += "<p><strong>Name:</strong> " +
+            therapists[i].getElementsByTagName("name")[0].childNodes[0].nodeValue + "<br>" +
+            "<strong>Specialization:</strong> " +
+            therapists[i].getElementsByTagName("specialization")[0].childNodes[0].nodeValue + "<br>" +
+            "<strong>Contact:</strong> " +
+            therapists[i].getElementsByTagName("contact")[0].childNodes[0].nodeValue + "<br>" +
+            "<strong>Email:</strong> " +
+            therapists[i].getElementsByTagName("email")[0].childNodes[0].nodeValue + "<br>" +
+            "<strong>Location:</strong> " +
+            therapists[i].getElementsByTagName("location")[0].childNodes[0].nodeValue + "</p>";
+    }
+    document.getElementById("therapists").innerHTML = therapistsHtml;
+
+    // Display Helplines
+    var helplines = xmlDoc.getElementsByTagName("helpline");
+    var helplinesHtml = "<h3>Helplines</h3>";
+    for (var i = 0; i < helplines.length; i++) {
+        helplinesHtml += "<p><strong>Name:</strong> " +
+            helplines[i].getElementsByTagName("name")[0].childNodes[0].nodeValue + "<br>" +
+            "<strong>Number:</strong> " +
+            helplines[i].getElementsByTagName("number")[0].childNodes[0].nodeValue + "<br>" +
+            "<strong>Hours:</strong> " +
+            helplines[i].getElementsByTagName("hours")[0].childNodes[0].nodeValue + "<br>" +
+            "<strong>Website:</strong> " +
+            helplines[i].getElementsByTagName("website")[0].childNodes[0].nodeValue + "</p>";
+    }
+    document.getElementById("helplines").innerHTML = helplinesHtml;
+
+    // Display Support Groups
+    var supportGroups = xmlDoc.getElementsByTagName("group");
+    var supportGroupsHtml = "<h3>Support Groups</h3>";
+    for (var i = 0; i < supportGroups.length; i++) {
+        supportGroupsHtml += "<p><strong>Name:</strong> " +
+            supportGroups[i].getElementsByTagName("name")[0].childNodes[0].nodeValue + "<br>" +
+            "<strong>Meeting Time:</strong> " +
+            supportGroups[i].getElementsByTagName("meeting_time")[0].childNodes[0].nodeValue + "<br>" +
+            "<strong>Location:</strong> " +
+            supportGroups[i].getElementsByTagName("location")[0].childNodes[0].nodeValue + "</p>";
+    }
+    document.getElementById("support_groups").innerHTML = supportGroupsHtml;
+}
+</script>
+
+</body> 
+</html>

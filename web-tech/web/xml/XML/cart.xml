@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cart>
+    <item>
+        <name>Apple</name>
+        <quantity>3</quantity>
+        <price>0.99</price>
+        <dateAdded>2024-10-15T12:30:00</dateAdded>
+    </item>
+    <item>
+        <name>Banana</name>
+        <quantity>5</quantity>
+        <price>0.59</price>
+        <dateAdded>2024-10-14T09:15:00</dateAdded>
+    </item>
+    <item>
+        <name>Orange</name>
+        <quantity>2</quantity>
+        <price>1.29</price>
+        <dateAdded>2024-10-13T15:45:00</dateAdded>
+    </item>
+</cart>

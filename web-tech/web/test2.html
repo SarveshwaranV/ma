@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="patientApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AngularJS Patient Management System</title>
+    
+    <!-- Inline CSS Styles -->
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: #333;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 14px 20px;
+            display: block;
+        }
+
+        nav ul li a:hover {
+            background-color: #575757;
+            border-radius: 4px;
+        }
+
+        /* Container Styling */
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        /* Patient Card Styling */
+        .patient-card {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            background-color: #fafafa;
+        }
+
+        .patient-card h3 {
+            margin-bottom: 10px;
+        }
+
+        .patient-card p {
+            margin-bottom: 5px;
+        }
+
+        /* Form Styling */
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        form label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        form input, form textarea {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        form button {
+            padding: 10px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        form button:hover {
+            background-color: #218838;
+        }
+
+        /* About Section */
+        .about {
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Search and Button Styling */
+        .search-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .search-container input {
+            width: 70%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .search-container button {
+            width: 25%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .search-container button:hover {
+            background-color: #0069d9;
+        }
+    </style>
+
+    <!-- Include AngularJS and AngularJS Route from CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
+    
+    <!-- Inline JavaScript Code -->
+    <script>
+        // Define the main AngularJS module with dependencies
+        var app = angular.module('patientApp', ['ngRoute']);
+
+        // Configure routes using $routeProvider
+        app.config(['$routeProvider', function($routeProvider) {
+            $routeProvider
+                .when('/', {
+                    templateUrl: 'home.html',
+                    controller: 'HomeController'
+                })
+                .when('/add', {
+                    templateUrl: 'add.html',
+                    controller: 'AddController'
+                })
+                .when('/about', {
+                    templateUrl: 'about.html',
+                    controller: 'AboutController'
+                })
+                .otherwise({
+                    redirectTo: '/'
+                });
+        }]);
+
+        // Factory to manage patient data
+        app.factory('PatientFactory', function() {
+            var patients = [
+                { id: 1, name: 'John Doe', age: 32, symptoms: 'Fever, Cough' },
+                { id: 2, name: 'Jane Smith', age: 28, symptoms: 'Headache' },
+                { id: 3, name: 'Sam Wilson', age: 45, symptoms: 'Back Pain' }
+            ];
+
+            return {
+                getPatients: function() {
+                    return patients;
+                },
+                addPatient: function(patient) {
+                    patient.id = patients.length + 1;
+                    patients.push(patient);
+                }
+            };
+        });
+
+        // Service to handle additional patient operations
+        app.service('PatientService', ['PatientFactory', function(PatientFactory) {
+            this.fetchMorePatients = function() {
+                // Simulate fetching more patients (could be replaced with API calls)
+                var morePatients = [
+                    { id: 4, name: 'Tom Hanks', age: 65, symptoms: 'Joint Pain' },
+                    { id: 5, name: 'Emma Watson', age: 31, symptoms: 'Allergy' }
+                ];
+                morePatients.forEach(function(patient) {
+                    PatientFactory.addPatient(patient);
+                });
+            };
+        }]);
+
+        // Custom filter to capitalize patient names
+        app.filter('capitalize', function() {
+            return function(input) {
+                if (input) {
+                    return input.charAt(0).toUpperCase() + input.slice(1).toLowerCase();
+                }
+                return '';
+            };
+        });
+
+        // Controller for Home view
+        app.controller('HomeController', ['$scope', 'PatientFactory', 'PatientService',
+            function($scope, PatientFactory, PatientService) {
+                $scope.title = "Patient List";
+                $scope.searchText = "";
+                $scope.patients = PatientFactory.getPatients();
+
+                $scope.addMore = function() {
+                    PatientService.fetchMorePatients();
+                    $scope.patients = PatientFactory.getPatients();
+                };
+            }
+        ]);
+
+        // Controller for Add Patient view
+        app.controller('AddController', ['$scope', 'PatientFactory', '$location',
+            function($scope, PatientFactory, $location) {
+                $scope.title = "Add New Patient";
+                $scope.patient = {};
+
+                $scope.addPatient = function() {
+                    if ($scope.patientForm.$valid) {
+                        PatientFactory.addPatient($scope.patient);
+                        $location.path('/');
+                    }
+                };
+            }
+        ]);
+
+        // Controller for About view
+        app.controller('AboutController', ['$scope', function($scope) {
+            $scope.title = "About";
+            $scope.info = "This is a simple Patient Management System built with AngularJS.";
+        }]);
+
+        // Custom Directive to display patient details
+        app.directive('patientCard', function() {
+            return {
+                restrict: 'E',
+                scope: {
+                    patient: '='
+                },
+                template: `
+                    <div class="patient-card">
+                        <h3>{{patient.name | capitalize}}</h3>
+                        <p><strong>Age:</strong> {{patient.age}}</p>
+                        <p><strong>Symptoms:</strong> {{patient.symptoms}}</p>
+                    </div>
+                `
+            };
+        });
+    </script>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <ul>
+            <li><a href="#!/">Home</a></li>
+            <li><a href="#!/add">Add Patient</a></li>
+            <li><a href="#!/about">About</a></li>
+        </ul>
+    </nav>
+
+    <!-- View Container -->
+    <div ng-view></div>
+
+    <!-- Templates -->
+
+    <!-- Home Template -->
+    <script type="text/ng-template" id="home.html">
+        <div class="container">
+            <h1>{{title}}</h1>
+            <div class="search-container">
+                <input type="text" ng-model="searchText" placeholder="Search Patients by Name" />
+                <button ng-click="addMore()">Load More Patients</button>
+            </div>
+            <hr/>
+            <div ng-repeat="patient in patients | filter:searchText">
+                <patient-card patient="patient"></patient-card>
+            </div>
+        </div>
+    </script>
+
+    <!-- Add Patient Template -->
+    <script type="text/ng-template" id="add.html">
+        <div class="container">
+            <h1>{{title}}</h1>
+            <form name="patientForm" ng-submit="addPatient()" novalidate>
+                <label for="name">Name:</label>
+                <input type="text" id="name" ng-model="patient.name" required />
+
+                <label for="age">Age:</label>
+                <input type="number" id="age" ng-model="patient.age" required min="0" />
+
+                <label for="symptoms">Symptoms:</label>
+                <textarea id="symptoms" ng-model="patient.symptoms" required></textarea>
+
+                <button type="submit">Add Patient</button>
+            </form>
+        </div>
+    </script>
+
+    <!-- About Template -->
+    <script type="text/ng-template" id="about.html">
+        <div class="container about">
+            <h1>{{title}}</h1>
+            <p>{{info}}</p>
+        </div>
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+  <title>Filters</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-controller="FilterController">
+  <h1>AngularJS Filters Example</h1>
+  
+  <h2>Built-in Filters:</h2>
+  <p>Name: <span ng-bind="name | uppercase"></span></p>
+  <p>Price: <span ng-bind="price | currency"></span></p>
+  <p>Date: <span ng-bind="today | date:'fullDate'"></span></p>
+  <p>JSON: <span ng-bind="data | json"></span></p>
+  <p>Limited Name: <span ng-bind="name | limitTo:4"></span></p>
+  
+  <h2>Custom Filter:</h2>
+  <p>Formatted Name: <span ng-bind="name | capitalizeWords"></span></p>
+
+  <script>
+    angular.module('myApp', [])
+      .controller('FilterController', ['$scope', function($scope) {
+        $scope.name = 'john doe';
+        $scope.price = 123.45;
+        $scope.today = new Date();
+        $scope.data = { firstName: 'John', lastName: 'Doe', age: 30 };
+      }])
+      .filter('capitalizeWords', function() {
+        return function(input) {
+          if (!input) return '';
+          return input.replace(/\w\S*/g, function(txt) {
+            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+          });
+        };
+      });
+  </script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+  <title>Directives</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body>
+  <my-directive></my-directive>
+  <script>
+    angular.module('myApp', [])
+      .directive('myDirective', [function() {
+        return {
+          restrict: 'E',
+          template: '<h1>Custom Directive</h1>'
+        };
+      }]);
+  </script>
+</body>
+</html>

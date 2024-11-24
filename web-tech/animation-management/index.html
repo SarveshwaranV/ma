@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="gridApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AngularJS Animated Grid</title>
+    <link rel="stylesheet" href="app/styles/style.css">
+</head>
+<body ng-controller="gridController">
+
+    <h1>Animated Grid</h1>
+    <div class="grid">
+        <div 
+            class="cell" 
+            ng-repeat="cell in grid track by $index"
+            ng-click="onCellClick($index)"
+            ng-mouseover="onMouseOver($index)"
+            ng-mouseout="onMouseOut($index)"
+            ng-class="{'highlight': selectedIndex === $index, 'fade': fadeIndex === $index}"
+        >
+            {{ cell }}
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.3/angular.min.js"></script>
+    <script src="app/app.js"></script>
+    <script src="app/controllers/gridController.js"></script>
+    <script src="app/services/numberService.js"></script>
+</body>
+</html>

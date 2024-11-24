@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html ng-app="employeeApp">
+  <head>
+    <title>Employee Management</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="app/app.module.js"></script>
+    <script src="app/app.config.js"></script>
+    <script src="app/services/employee.service.js"></script>
+    <script src="app/services/employee.factory.js"></script>
+    <script src="app/controllers/employee.controller.js"></script>
+    <script src="app/controllers/employee-form.controller.js"></script>
+  </head>
+  <body>
+    <div ng-controller="EmployeeController as empCtrl">
+      <h1>Employee Management</h1>
+      <label>
+        Filter by Department:
+        <input type="text" ng-model="empCtrl.departmentFilter" placeholder="e.g., HR">
+      </label>
+      <ul>
+        <li ng-repeat="employee in empCtrl.getFilteredEmployees()">
+          <img ng-src="{{employee.photo}}" alt="{{employee.name}}" width="50">
+          <strong>{{employee.name}}</strong> - {{employee.position}}
+          <button ng-click="empCtrl.deleteEmployee(employee._id)">Delete</button>
+        </li>
+      </ul>
+      <h2>Total Salary: {{empCtrl.getTotalSalary() | currency}}</h2>
+
+      <div ng-controller="EmployeeFormController as formCtrl">
+        <h2>Add Employee</h2>
+        <form ng-submit="formCtrl.addEmployee()">
+          <input type="text" ng-model="formCtrl.newEmployee.name" placeholder="Name" required>
+          <input type="text" ng-model="formCtrl.newEmployee.position" placeholder="Position" required>
+          <input type="text" ng-model="formCtrl.newEmployee.department" placeholder="Department" required>
+          <input type="number" ng-model="formCtrl.newEmployee.salary" placeholder="Salary" required>
+          <input type="text" ng-model="formCtrl.newEmployee.photo" placeholder="Photo URL">
+          <button type="submit">Add</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

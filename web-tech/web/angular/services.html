@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+  <title>Services</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-controller="ServiceController">
+  <h1 ng-bind="message"></h1>
+  <script>
+    angular.module('myApp', [])
+      .factory('MyService', [function() {
+        return {
+          getMessage: function() {
+            return 'Hello from service!';
+          }
+        };
+      }])
+      .controller('ServiceController', ['$scope', 'MyService', function($scope, MyService) {
+        $scope.message = MyService.getMessage();
+      }]);
+  </script>
+</body>
+</html>

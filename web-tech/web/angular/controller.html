@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+  <title>Controllers</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-controller="MyController">
+  <h1 ng-bind="title"></h1>
+  <button ng-click="changeTitle()">Change Title</button>
+  <script>
+    angular.module('myApp', [])
+      .controller('MyController', ['$scope', function($scope) {
+        $scope.title = 'Original Title';
+
+        $scope.changeTitle = function() {
+          $scope.title = 'New Title';
+        };
+      }]);
+  </script>
+</body>
+</html>

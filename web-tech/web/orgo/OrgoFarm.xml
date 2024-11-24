@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="OrgoFarmFruits.xslt"?>
+
+<OrgoFarm>
+    <Products>
+        <Vegetables>
+            <Product id="V01">
+                <Name>Carrot</Name>
+                <Price>40</Price>
+                <Quantity>100</Quantity>
+                <FarmerName>John Doe</FarmerName>
+            </Product>
+            <Product id="V02">
+                <Name>Potato</Name>
+                <Price>20</Price>
+                <Quantity>200</Quantity>
+                <FarmerName>Jane Smith</FarmerName>
+            </Product>
+        </Vegetables>
+        <Fruits>
+            <Product id="F01">
+                <Name>Apple</Name>
+                <Price>100</Price>
+                <Quantity>150</Quantity>
+                <FarmerName>Robert Brown</FarmerName>
+            </Product>
+            <Product id="F02">
+                <Name>Banana</Name>
+                <Price>50</Price>
+                <Quantity>180</Quantity>
+                <FarmerName>Susan Clark</FarmerName>
+            </Product>
+        </Fruits>
+        <Dairy>
+            <Product id="D01">
+                <Name>Milk</Name>
+                <Price>60</Price>
+                <Quantity>500</Quantity>
+                <FarmerName>Michael White</FarmerName>
+            </Product>
+        </Dairy>
+    </Products>
+    <Funds>
+        <Support>
+            <DonorName>David Green</DonorName>
+            <Amount>5000</Amount>
+        </Support>
+    </Funds>
+</OrgoFarm>
