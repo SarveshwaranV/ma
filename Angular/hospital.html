@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Appointment Booking</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-app="hospitalApp" ng-controller="AppointmentController">
+
+    <h1>Hospital Appointment Booking</h1>
+    <h3>Available Doctors</h3>
+    <ul>
+        <li ng-repeat="doctor in doctors">
+            Dr. {{ doctor.name }} - Specialization: {{ doctor.specialization }}
+            <button ng-click="bookAppointment(doctor)">Book Appointment</button>
+        </li>
+    </ul>
+
+    <h3>Your Appointments</h3>
+    <ul>
+        <li ng-repeat="appointment in appointments">
+            Appointment with Dr. {{ appointment.name }} ({{ appointment.specialization }})
+            <button ng-click="cancelAppointment(appointment)">Cancel</button>
+        </li>
+    </ul>
+
+    <script>
+        var app = angular.module('hospitalApp', []);
+        app.controller('AppointmentController', function($scope) {
+            $scope.doctors = [
+                { name: 'John Doe', specialization: 'Cardiology' },
+                { name: 'Jane Smith', specialization: 'Neurology' },
+                { name: 'Emily Johnson', specialization: 'Pediatrics' }
+            ];
+            $scope.appointments = [];
+            $scope.bookAppointment = function(doctor) {
+                $scope.appointments.push(doctor);
+            };
+            $scope.cancelAppointment = function(appointment) {
+                $scope.appointments = $scope.appointments.filter(appt => appt !== appointment);
+            };
+        });
+    </script>
+</body>
+</html>

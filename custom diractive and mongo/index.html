@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shopping Cloth</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-app="myapp" ng-controller="MainController as ctrl">
+    <center><h1>Shopping Management</h1></center>
+    
+    <!-- Custom directive for adding a cloth item -->
+    <cloth-form></cloth-form>
+
+    <p>Cloth List:</p>
+    <ul>
+        <li ng-repeat="cloth in ctrl.cloths">
+            NAME: {{cloth.name}} - PRICE: {{cloth.price | currency}} 
+            <button ng-click="ctrl.removeCloth(cloth._id)">Remove</button>
+        </li>
+    </ul>
+
+    <script >
+        var app = angular.module('myapp', []);
+
+// Factory to handle HTTP requests
+app.factory('ClothService', function($http) {
+    var baseUrl = 'http://localhost:3000/cloths';
+
+    return {
+        getCloths: function() {
+            return $http.get(baseUrl);
+        },
+        addCloth: function(newCloth) {
+            return $http.post(baseUrl, newCloth);
+        },
+        removeCloth: function(id) {
+            return $http.delete(baseUrl + '/' + id);
+        }
+    };
+});
+
+// Main controller
+app.controller('MainController', function(ClothService) {
+    var vm = this;
+    vm.cloths = [];
+
+    // Load all clothes
+    vm.loadCloths = function() {
+        ClothService.getCloths()
+            .then(function(response) {
+                vm.cloths = response.data;
+            });
+    };
+
+    // Remove cloth
+    vm.removeCloth = function(id) {
+        ClothService.removeCloth(id)
+            .then(function() {
+                vm.loadCloths();
+            });
+    };
+
+    // Initialize the list
+    vm.loadCloths();
+});
+
+// Custom directive for adding a cloth item
+app.directive('clothForm', function(ClothService) {
+    return {
+        restrict: 'E',
+        template: `
+            <form ng-submit="submitCloth()">
+                <input type="text" ng-model="newCloth.name" placeholder="Enter a product" required>
+                <input type="number" ng-model="newCloth.price" placeholder="Enter a price" required>
+                <button type="submit">Add Item</button>
+            </form>
+        `,
+        controller: function($scope) {
+            $scope.newCloth = {};
+
+            $scope.submitCloth = function() {
+                ClothService.addCloth($scope.newCloth)
+                    .then(function() {
+                        $scope.$parent.ctrl.loadCloths();
+                        $scope.newCloth = {};
+                    });
+            };
+        }
+    };
+});
+
+    </script>
+</body>
+</html>

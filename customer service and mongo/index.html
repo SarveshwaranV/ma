@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shopping Cloth</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-app="myapp" ng-controller="control">
+    <center><h1>Shopping Management</h1></center>
+    <form ng-submit="addcloth()">
+        <input type="text" ng-model="newitem.name" placeholder="Enter a product" required>
+        <input type="number" ng-model="newitem.price" placeholder="Enter a price" required>
+        <button type="submit">Add Item</button>
+        <input type="text" ng-model="namess" placeholder="Enter a name">
+        <p>{{namess}}</p>
+    </form>
+    <p>Cloth List:</p>
+    <ul>
+        <li ng-repeat="value in cloths">
+            NAME: {{value.name}} - PRICE: {{value.price | currency}} 
+            <button ng-click="removecloth(value._id)">Remove</button>
+        </li>
+    </ul>
+
+    <script>
+        var app = angular.module('myapp', []);
+
+        // Custom service for cloth items
+        app.service('ClothService', function($http) {
+            this.getCloths = function() {
+                return $http.get('http://localhost:3000/cloths');
+            };
+
+            this.addCloth = function(newitem) {
+                return $http.post('http://localhost:3000/cloths', newitem);
+            };
+
+            this.removeCloth = function(id) {
+                return $http.delete('http://localhost:3000/cloths/' + id);
+            };
+        });
+
+        // Controller using $scope
+        app.controller('control', function(ClothService, $scope) {
+            $scope.cloths = [];
+            $scope.newitem = {};
+            $scope.namess = "vishnu";
+
+            // Fetch all cloth items
+            $scope.getadd = function() {
+                ClothService.getCloths().then(function(response) {
+                    $scope.cloths = response.data;
+                });
+            };
+
+            // Add a new cloth item
+            $scope.addcloth = function() {
+                ClothService.addCloth($scope.newitem).then(function() {
+                    $scope.getadd();
+                    $scope.newitem = {};
+                });
+            };
+
+            // Remove a cloth item
+            $scope.removecloth = function(id) {
+                ClothService.removeCloth(id).then(function() {
+                    $scope.getadd();
+                });
+            };
+
+            // Initial fetch
+            $scope.getadd();
+        });
+    </script>
+</body>
+</html>

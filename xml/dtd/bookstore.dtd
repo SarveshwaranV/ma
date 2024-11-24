@@ -1,0 +1,28 @@
+<!ELEMENT bookstore (inventory, customers, orders)>
+
+<!-- Inventory section -->
+<!ELEMENT inventory (book+)>
+<!ELEMENT book (title, author, price, quantity, publish_date)>
+<!ATTLIST book id ID #REQUIRED category CDATA #REQUIRED>
+<!ELEMENT title (#PCDATA)>
+<!ATTLIST title lang CDATA #IMPLIED>
+<!ELEMENT author (#PCDATA)>
+<!ELEMENT price (#PCDATA)>
+<!ELEMENT quantity (#PCDATA)>
+<!ELEMENT publish_date (#PCDATA)>
+
+<!-- Customer section -->
+<!ELEMENT customers (customer+)>
+<!ELEMENT customer (name, email, phone)>
+<!ATTLIST customer id ID #REQUIRED>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT email (#PCDATA)>
+<!ELEMENT phone (#PCDATA)>
+
+<!-- Orders section -->
+<!ELEMENT orders (order+)>
+<!ELEMENT order (order_date, book_ref+)>
+<!ATTLIST order id ID #REQUIRED customer_id IDREF #REQUIRED>
+<!ELEMENT order_date (#PCDATA)>
+<!ELEMENT book_ref EMPTY>
+<!ATTLIST book_ref id IDREF #REQUIRED quantity CDATA #REQUIRED>

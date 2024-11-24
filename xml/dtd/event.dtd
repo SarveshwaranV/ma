@@ -1,0 +1,8 @@
+<!ELEMENT events (event+)>
+<!ELEMENT event (name, date, location, organizer, attendees)>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT date (#PCDATA)>
+<!ELEMENT location (#PCDATA)>
+<!ELEMENT organizer (#PCDATA)>
+<!ELEMENT attendees (#PCDATA)>
+<!ATTLIST attendees count CDATA #REQUIRED>

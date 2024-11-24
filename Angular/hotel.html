@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Room Booking</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-app="hotelApp" ng-controller="RoomController">
+
+    <h1>Hotel Room Booking</h1>
+    <h3>Available Rooms</h3>
+    <ul>
+        <li ng-repeat="room in rooms">
+            Room Type: {{ room.type }} - ${{ room.price }}/night
+            <button ng-click="bookRoom(room)">Book Room</button>
+        </li>
+    </ul>
+
+    <h3>Your Bookings</h3>
+    <ul>
+        <li ng-repeat="booking in bookings">
+            {{ booking.type }} Room - ${{ booking.price }}/night
+            <button ng-click="cancelBooking(booking)">Cancel</button>
+        </li>
+    </ul>
+
+    <script>
+        var app = angular.module('hotelApp', []);
+        app.controller('RoomController', function($scope) {
+            $scope.rooms = [
+                { type: 'Single', price: 50 },
+                { type: 'Double', price: 100 },
+                { type: 'Suite', price: 200 }
+            ];
+            $scope.bookings = [];
+            $scope.bookRoom = function(room) {
+                $scope.bookings.push(room);
+            };
+            $scope.cancelBooking = function(booking) {
+                $scope.bookings = $scope.bookings.filter(b => b !== booking);
+            };
+        });
+    </script>
+</body>
+</html>

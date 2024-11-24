@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE bookstore SYSTEM "bookstore.dtd">
+<bookstore>
+    <inventory>
+        <book id="B001" category="Fiction">
+            <title lang="en">To Kill a Mockingbird</title>
+            <author>Harper Lee</author>
+            <price>18.99</price>
+            <quantity>50</quantity>
+            <publish_date>1960-07-11</publish_date>
+        </book>
+
+        <book id="B002" category="Science Fiction">
+            <title lang="en">Neuromancer</title>
+            <author>William Gibson</author>
+            <price>22.50</price>
+            <quantity>30</quantity>
+            <publish_date>1984-07-01</publish_date>
+        </book>
+    </inventory>
+
+    <customers>
+        <customer id="C001">
+            <name>John Doe</name>
+            <email>john.doe@example.com</email>
+            <phone>123-456-7890</phone>
+        </customer>
+
+        <customer id="C002">
+            <name>Jane Smith</name>
+            <email>jane.smith@example.com</email>
+            <phone>987-654-3210</phone>
+        </customer>
+    </customers>
+
+    <orders>
+        <order id="O001" customer_id="C001">
+            <order_date>2024-10-17</order_date>
+            <book_ref id="B001" quantity="1"/>
+        </order>
+
+        <order id="O002" customer_id="C002">
+            <order_date>2024-10-18</order_date>
+            <book_ref id="B002" quantity="2"/>
+        </order>
+    </orders>
+</bookstore>

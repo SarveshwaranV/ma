@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Shopping Cloth</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    </head>
+    <body ng-app="myapp" ng-controller="control">
+        <center><h1>Shopping Management</h1></center>
+        <form ng-submit="addcloth()">
+            <input type="text" ng-model="newitem.name" placeholder="Enter a product" required>
+            <input type="number" ng-model="newitem.price" placeholder="Enter a price" required>
+            <button type="submit">Add Item</button>
+            <input type="text" ng-model="namess" placeholder="enter a name">
+            <p>{{namess | uppercase}}</p>
+        </form>
+        <p>Cloth List:</p>
+        <ul>
+            <li ng-repeat="value in cloths">
+                NAME: {{value.name}} - PRICE: {{value.price | currency}} 
+                <button ng-click="removecloth(value._id)">Remove</button>
+            </li>
+        </ul>
+        <script>
+            var app = angular.module('myapp', []);
+            app.controller('control', function($http,$scope) {
+            $scope.cloths = [];
+            $scope.newitem = {};
+                $scope.namess="vishnu";
+            $scope.getadd = function() {
+                    $http.get('http://localhost:3000/cloths')
+                        .then(function(response) {
+                        $scope.cloths = response.data;
+                        });
+                };
+
+            $scope.addcloth = function() {
+                    $http.post('http://localhost:3000/cloths',$scope.newitem)
+                        .then(function() {
+                        $scope.getadd();
+                        $scope.newitem = {};
+                        });
+                };
+                // Remove a cloth item
+            $scope.removecloth = function(id) {
+                    $http.delete('http://localhost:3000/cloths/' + id)
+                        .then(function() {
+                        $scope.getadd();
+                        });
+                };
+
+                // Initial fetch
+            $scope.getadd();
+            });
+        </script>
+    </body>
+</html>

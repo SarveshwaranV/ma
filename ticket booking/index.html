@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html ng-app="movieApp">
+<head>
+    <title>Movie Ticket Reservation</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="app.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .movie-form { max-width: 500px; margin: 0 auto; }
+        .form-group { margin-bottom: 15px; }
+        input, select { width: 100%; padding: 8px; margin-top: 5px; }
+        button { padding: 10px 20px; background: #4CAF50; color: white; border: none; cursor: pointer; }
+        .reservations { margin-top: 30px; }
+        .reservation-item { border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; }
+    </style>
+</head>
+<body ng-controller="MovieController">
+    <div class="movie-form">
+        <h2>Movie Ticket Reservation</h2>
+        
+        <div class="form-group">
+            <label>Movie Name:</label>
+            <select ng-model="reservation.movieName">
+                <option value="Avengers">Avengers</option>
+                <option value="Spider-Man">Spider-Man</option>
+                <option value="Batman">Batman</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Customer Name:</label>
+            <input type="text" ng-model="reservation.customerName" required>
+        </div>
+
+        <div class="form-group">
+            <label>Number of Tickets:</label>
+            <input type="number" ng-model="reservation.numTickets" min="1" required>
+        </div>
+
+        <div class="form-group">
+            <label>Show Time:</label>
+            <select ng-model="reservation.showTime">
+                <option value="10:00 AM">10:00 AM</option>
+                <option value="2:00 PM">2:00 PM</option>
+                <option value="6:00 PM">6:00 PM</option>
+                <option value="9:00 PM">9:00 PM</option>
+            </select>
+        </div>
+
+        <button ng-click="makeReservation()">Book Tickets</button>
+
+        <div class="reservations">
+            <h3>Current Reservations</h3>
+            <div class="reservation-item" ng-repeat="r in reservations">
+                <p><strong>Movie:</strong> {{r.movieName}}</p>
+                <p><strong>Customer:</strong> {{r.customerName}}</p>
+                <p><strong>Tickets:</strong> {{r.numTickets}}</p>
+                <p><strong>Show Time:</strong> {{r.showTime}}</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

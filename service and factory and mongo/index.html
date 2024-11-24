@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-app="shoppingApp" ng-controller="cartController">
+    <center>
+        <h1>Shopping Cart</h1>
+        <form ng-submit="addItem()">
+            <input type="text" ng-model="newItem.name" placeholder="Enter item name" required>
+            <input type="number" ng-model="newItem.price" placeholder="Enter price" required>
+            <button type="submit">Add Item</button>
+        </form>
+        <h2>Items in Cart:</h2>
+        <ul>
+            <li ng-repeat="item in cartItems">
+                {{item.name}} - {{item.price | currency}}
+                <button ng-click="removeItem(item._id)">Remove</button>
+            </li>
+        </ul>
+        <h3>Total Price: {{totalPrice | currency}}</h3>
+    </center>
+
+    <script>
+        var app = angular.module('shoppingApp', []);
+
+        // Factory to handle HTTP requests
+        app.factory('CartFactory', function($http) {
+            var factory = {};
+            
+            // Fetch items from the database
+            factory.getItems = function() {
+                return $http.get('http://localhost:3000/cloths');
+            };
+
+            // Add an item to the database
+            factory.addItem = function(newItem) {
+                return $http.post('http://localhost:3000/cloths', newItem);
+            };
+
+            // Remove an item from the database
+            factory.removeItem = function(id) {
+                return $http.delete('http://localhost:3000/cloths/' + id);
+            };
+
+            return factory;
+        });
+
+        // Service for utility functions
+        app.service('CartService', function() {
+            this.calculateTotal = function(items) {
+                let total = 0;
+                items.forEach(item => {
+                    total += item.price;
+                });
+                return total;
+            };
+        });
+
+        // Controller using Factory and Service
+        app.controller('cartController', function($scope, CartFactory, CartService) {
+            $scope.cartItems = [];
+            $scope.newItem = {};
+            $scope.totalPrice = 0;
+
+            // Fetch all cart items from the server
+            $scope.getItems = function() {
+                CartFactory.getItems().then(function(response) {
+                    $scope.cartItems = response.data;
+                    $scope.totalPrice = CartService.calculateTotal($scope.cartItems); // Recalculate total after fetching items
+                });
+            };
+
+            // Add a new item to the cart
+            $scope.addItem = function() {
+                CartFactory.addItem($scope.newItem).then(function() {
+                    $scope.getItems();  // Refresh cart items and total after adding a new item
+                    $scope.newItem = {}; // Reset form
+                });
+            };
+
+            // Remove an item from the cart
+            $scope.removeItem = function(id) {
+                CartFactory.removeItem(id).then(function() {
+                    $scope.getItems(); // Refresh cart items and total after removing an item
+                });
+            };
+
+            // Initial fetch of items
+            $scope.getItems();
+        });
+    </script>
+</body>
+</html>

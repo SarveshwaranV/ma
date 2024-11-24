@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE events SYSTEM "event.dtd">
+<events>
+    <event>
+        <name>Tech Conference 2024</name>
+        <date>2024-12-15</date>
+        <location>Madurai</location>
+        <organizer>Thiagarajar College of Engineering</organizer>
+        <attendees>200</attendees>
+    </event>
+    <event>
+        <name>Startup Meetup</name>
+        <date>2024-11-30</date>
+        <location>Chennai</location>
+        <organizer>Startup Tamil Nadu</organizer>
+        <attendees>150</attendees>
+    </event>
+    <event>
+        <name>Cultural Fest</name>
+        <date>2024-12-20</date>
+        <location>Bangalore</location>
+        <organizer>XYZ Foundation</organizer>
+        <attendees>500</attendees>
+    </event>
+</events>
